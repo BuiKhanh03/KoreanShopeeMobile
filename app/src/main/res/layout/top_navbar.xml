@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/top_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/pink800"
+    android:padding="8dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <EditText
+            android:id="@+id/search_bar"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="8.5"
+            android:background="@drawable/search_background"
+            android:drawableLeft="@drawable/ic_search"
+            android:drawablePadding="8dp"
+            android:hint="Tìm kiếm sản phẩm..."
+            android:inputType="text"
+            android:paddingHorizontal="12dp"
+            android:textColor="@color/pink800"
+            android:textColorHint="@color/blue800" />
+
+        <ImageView
+            android:id="@+id/icon_chat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1.5"
+            android:contentDescription="Trò chuyện"
+            android:padding="8dp"
+            android:src="@drawable/ic_chat" />
+    </LinearLayout>
+</androidx.appcompat.widget.Toolbar>
