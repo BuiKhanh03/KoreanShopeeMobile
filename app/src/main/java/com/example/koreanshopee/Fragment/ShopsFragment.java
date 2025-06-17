@@ -1,4 +1,4 @@
-package com.example.koreanshopee;
+package com.example.koreanshopee.Fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+
+import com.example.koreanshopee.R;
 
 public class ShopsFragment extends Fragment {
     public ShopsFragment() {}

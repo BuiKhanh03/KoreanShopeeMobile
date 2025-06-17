@@ -1,3 +1,132 @@
 <resources>
     <string name="app_name">KoreanShopee</string>
+    <string name="welcome">Chào mừng đến với Korean Shoppe</string>
+    <!--Log in-->
+    <string name="login">ĐĂNG NHẬP</string>
+    <string name="log_out">ĐĂNG XUẤT</string>
+    <string name="email">Email</string>
+    <string name="password">Mật khẩu</string>
+    <string name="forget_pass">Quên mật khẩu?</string>
+    <string name="create_seller_account">Tham gia bán hàng cùng chúng tôi</string>
+    <!--Reset pass -->
+    <string name="have_account">Đã có tài khoản? Đăng nhập.</string>
+    <string name="reset_pass">ĐẶT LẠI MẬT KHẨU</string>
+    <string name="receive_link">Nhận OTP qua email</string>
+    <!--Create Account-->
+    <string name="create_n_account">Tạo tài khoản mới</string>
+    <string name="create_n_s_account">Tạo tài khoản người bán mới</string>
+    <string name="create_account">Tạo tài khoản</string>
+    <string name="owner_f_name">Tên chủ cửa hàng</string>
+    <string name="owner_l_name">Họ chủ cửa hàng</string>
+    <string name="f_name">Tên</string>
+    <string name="l_name">Họ</string>
+    <string name="full_name">Họ và tên</string>
+    <string name="ph_no">Số điện thoại</string>
+    <string name="owner_ph_no">Số điện thoại chủ cửa hàng</string>
+    <string name="for_order">Cho đơn hàng:</string>
+    <string name="for_owner">Thông tin chủ cửa hàng:</string>
+    <string name="shop_name">Tên cửa hàng</string>
+    <string name="GST_no">Mã số thuế (GST)</string>
+    <string name="for_company">Thông tin công ty:</string>
+    <string name="address">Địa chỉ</string>
+    <string name="pincode">Mã bưu chính</string>
+    <!--Home page-->
+    <string name="title_activity_home_customer">Trang chính (Khách hàng)</string>
+    <string name="title_home">Trang chủ</string>
+    <string name="title_search">Tìm kiếm</string>
+    <string name="title_profile">Hồ sơ</string>
+    <!--Profile-->
+    <string name="name">TÊN CỦA TÔI</string>
+    <string name="profile">HỒ SƠ CỦA TÔI</string>
+    <string name="favourites">Yêu thích</string>
+    <string name="my_cart">Giỏ hàng</string>
+    <string name="order_history">LỊCH SỬ ĐƠN HÀNG</string>
+    <string name="review_history">ĐÁNH GIÁ SẢN PHẨM</string>
+    <string name="help">Trợ giúp</string>
+    <string name="contact_dev">Liên hệ nhà phát triển</string>
+    <string name="about">VỀ ỨNG DỤNG</string>
+    <string name="design">mục đích thiết kế</string>
+    <!--contact dev-->
+    <string name="tellproblem">Hãy cho tôi biết vấn đề bạn gặp phải</string>
+    <string name="sevofproblem">Mức độ nghiêm trọng của vấn đề</string>
+    <string name="detailaboutproblem">Chi tiết về vấn đề bạn đang gặp phải:</string>
+    <string name="sendmail">Gửi email</string>
+    <string name="title_activity_home_seller">Trang chính (Người bán)</string>
+    <string name="navigation_drawer_open">Mở menu điều hướng</string>
+    <string name="navigation_drawer_close">Đóng menu điều hướng</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">Đăng nhập thành công</string>
+    <string name="nav_header_desc">Tiêu đề điều hướng</string>
+    <string name="action_settings">Cài đặt</string>
+
+    <string name="menu_home">Trang chủ</string>
+    <string name="menu_gallery">Thư viện</string>
+    <string name="menu_slideshow">Trình chiếu</string>
+    <string name="menu_addbook">Thêm sách</string>
+    <string name="menu_removebooks">Xóa sách</string>
+
+    <string name="home_second">Trang chủ phụ</string>
+    <string name="menu_booklist">Danh sách sách</string>
+    <string name="menu_update_order">Cập nhật trạng thái đơn hàng</string>
+    <string name="menu_info">Thông tin của tôi</string>
+    <string name="menu_profile">Hồ sơ của tôi</string>
+    <string name="menu_options">Khác</string>
+    <string name="menu_setting">Cài đặt</string>
+    <string name="menu_feedback">Báo lỗi/Liên hệ</string>
+    <string name="menu_about">Về ứng dụng</string>
+    <string name="menu_history">Lịch sử thanh toán</string>
+    <string name="menu_current_order">Tất cả đơn hàng</string>
+    <string name="user">Người dùng</string>
+    <string name="searchhere">Tìm kiếm sách để thêm</string>
+
+    <string name="Failed_to_Load_data">Vui lòng kiểm tra kết nối Internet</string>
+    <string name="NO_RESULT">Không có kết quả phù hợp</string>
+
+    <!--UPDATE INFO-->
+    <string name="update_det">CẬP NHẬT THÔNG TIN</string>
+    <string name="verifyemail">XÁC MINH EMAIL CỦA BẠN*</string>
+    <string name="updansave">CẬP NHẬT VÀ LƯU THAY ĐỔI</string>
+    <string name="addbook">THÊM SÁCH VÀO DANH SÁCH BÁN</string>
+    <string name="quan_ava">SỐ LƯỢNG CÓ SẴN TẠI CỬA HÀNG</string>
+    <string name="urprice">GIÁ BÁN CỦA BẠN</string>
+    <string name="rentprice">GIÁ CHO THUÊ</string>
+    <string name="delicharges">PHÍ GIAO HÀNG</string>
+    <!--SEARCH BOOK-->
+    <string name="search_ph">Tìm sách theo tên, tác giả</string>
+    <!--VIEW BOOK-->
+    <string name="buybook">Mua sách</string>
+    <string name="rentbook">Thuê sách</string>
+    <string name="read_preview">Xem trước sách</string>
+    <string name="conti">Tiếp tục</string>
+    <string name="placeorder">Đặt hàng</string>
+    <string name="pinfo">Bạn sẽ thanh toán tiền và các giấy tờ (nếu cần) khi nhận hàng. Có thể thanh toán bằng tiền mặt, UPI, thẻ hoặc các hình thức trực tuyến khác.</string>
+    <string name="addadd">Nhập địa chỉ mới</string>
+    <string name="order_summary">Tóm tắt đơn hàng</string>
+    <string name="change_address_for_this_order">Thay đổi địa chỉ cho đơn hàng này</string>
+    <string name="book_image">Hình ảnh sách</string>
+    <string name="authname">Tên tác giả</string>
+    <string name="genre">Thể loại</string>
+    <string name="price_details">Chi tiết giá</string>
+    <string name="price_1_item">Giá (1 món)</string>
+    <string name="delivery_charges">Phí giao hàng</string>
+    <string name="total_amount">Tổng số tiền</string>
+    <string name="payment_details">Chi tiết thanh toán</string>
+    <string name="cash_on_delivery">Thanh toán khi nhận hàng</string>
+    <string name="final_amount_to_pay">Tổng số tiền cần thanh toán</string>
+    <string name="use_this_address_for_this_order">Sử dụng địa chỉ này cho đơn hàng</string>
+    <string name="go_to_home">Về trang chủ</string>
+    <string name="order_placed">Đặt hàng thành công!</string>
+    <string name="click_on_address_to_change_address_for_this_order">(Nhấn vào địa chỉ để thay đổi địa chỉ và mã bưu chính cho đơn hàng này)</string>
+    <string name="orders_recevied">Đơn hàng đã nhận</string>
+    <string name="profit_earned">Lợi nhuận thu được*</string>
+    <string name="potential_profit">Lợi nhuận tiềm năng</string>
+    <string name="descripforOTP">Cung cấp mã OTP bí mật bên dưới cho nhân viên giao hàng để xác thực và giao hàng an toàn.</string>
+    <string name="select_the_number_of_days_for_renting">Chọn số ngày thuê: </string>
+    <string name="verification_documents_necessary">Cần giấy tờ xác minh</string>
+    <string name="any_valid_identity_proof_like_aadhar_card_pan_card_license_card_voting_card_would_be_considered">Chấp nhận mọi giấy tờ tùy thân hợp lệ như thẻ Aadhar, PAN, bằng lái xe, thẻ cử tri.</string>
+    <string name="any_valid_identity_proof_like_electricity_bill_rent_agreement_aadhar_card_would_be_considered">Chấp nhận mọi giấy tờ như hóa đơn điện, hợp đồng thuê nhà, thẻ Aadhar.</string>
+    <string name="updatenview">Cập nhật/xem thông tin</string>
+    <string name="recevied">Đã nhận</string>
+    <string name="tobereceived">Chưa nhận</string>
+    <string name="rejectedorder">Đơn hàng bị từ chối</string>
 </resources>

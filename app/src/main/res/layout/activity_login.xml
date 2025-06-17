@@ -8,7 +8,7 @@
     android:background="@color/white"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".login">
+    tools:context=".Login">
 
 
     <LinearLayout
@@ -19,7 +19,7 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="150dp"
             app:srcCompat="@drawable/logo2" />
 
     </LinearLayout>
@@ -85,11 +85,20 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/btn_forgot_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/forget_pass"
+            android:textColor="@color/pink800"
+            android:layout_marginBottom="16dp"
+            android:textStyle="bold" />
+
+        <TextView
             android:id="@+id/btn_signup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Bạn chưa có tài khoản? Nhấp để ĐĂNG KÝ"
-            android:textColor="@color/pink800"
+            android:textColor="@color/blue800"
             android:textStyle="bold" />
 
     </LinearLayout>

@@ -1,4 +1,4 @@
-package com.example.koreanshopee;
+package com.example.koreanshopee.Fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +9,10 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.koreanshopee.Item;
+import com.example.koreanshopee.ItemAdapter;
+import com.example.koreanshopee.R;
 
 import java.util.ArrayList;
 import java.util.List;

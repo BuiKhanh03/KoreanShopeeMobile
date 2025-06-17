@@ -11,6 +11,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.koreanshopee.Fragment.AccountFragment;
+import com.example.koreanshopee.Fragment.HomeFragment;
+import com.example.koreanshopee.Fragment.NotifyFragment;
+import com.example.koreanshopee.Fragment.SettingFragment;
+import com.example.koreanshopee.Fragment.ShopsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class layout_sceen extends AppCompatActivity {
