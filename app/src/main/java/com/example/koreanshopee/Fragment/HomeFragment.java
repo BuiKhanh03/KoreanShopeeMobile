@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -15,14 +16,41 @@ import com.example.koreanshopee.ItemAdapter;
 import com.example.koreanshopee.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
     public HomeFragment() {}
 
+    private TextView textGreeting;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        ImageView iconChat = view.findViewById(R.id.icon_chat);
+        iconChat.setOnClickListener(v -> {
+            Fragment chatFragment = new ChatFragment();
+            getParentFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, chatFragment)
+                    .addToBackStack(null)
+                    .commit();
+        });
+
+        textGreeting = view.findViewById(R.id.text_greeting);
+        int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+
+        String greeting;
+        if (hour < 12) {
+            greeting = "Chào buổi sáng!";
+        } else if (hour < 18) {
+            greeting = "Chào buổi chiều!";
+        } else {
+            greeting = "Chào buổi tối!";
+        }
+
+        textGreeting.setText(greeting);
 
         View sectionBooks = view.findViewById(R.id.section_top_books);
         TextView tvBookTitle = sectionBooks.findViewById(R.id.tvSectionTitle);
