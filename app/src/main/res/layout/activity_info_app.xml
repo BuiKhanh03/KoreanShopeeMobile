@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:padding="16dp"
+    tools:context=".InfoApp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_back" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/about_icon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginBottom="16dp"
+                android:contentDescription="App Icon"
+                android:src="@drawable/logo" />
+
+            <TextView
+                android:id="@+id/app_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:gravity="center"
+                android:text="Mua hết ở KOREAN SHOPPE"
+                android:textColor="@color/blue800"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/about_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="4dp"
+                android:text="KOREAN SHOPPE là nền tảng chuyên biệt dành cho những ai học và yêu thích tiếng Hàn. Tại đây, bạn có thể mua – bán mọi loại sách, tài liệu và khóa học liên quan đến tiếng Hàn như:\n\n• Sách học tiếng Hàn (ngữ pháp, từ vựng, TOPIK,...)\n• Truyện tranh, tiểu thuyết tiếng Hàn\n• Giáo trình cũ, sách chuyên ngành Hàn Quốc học\n• Tài liệu học tập, slide bài giảng, đề thi\n• Khóa học tiếng Hàn (offline/online)\n\nTất cả sản phẩm được phép giao dịch đều phải:\n✓ Còn mới hoặc sử dụng tốt\n✓ Không vi phạm bản quyền\n✓ Không thuộc danh mục cấm theo quy định pháp luật Việt Nam\n\nChúng tôi mong muốn tạo ra một cộng đồng chia sẻ tri thức tiếng Hàn văn minh, tiết kiệm và đáng tin cậy."
+                android:textColor="#444"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/version_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="\nPhiên bản: 1.0.0"
+                android:textColor="#888"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/contact_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Liên hệ: koreanshoppe.sneytown.vn"
+                android:textColor="#888"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

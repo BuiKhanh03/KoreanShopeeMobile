@@ -10,11 +10,11 @@
         android:id="@+id/textCartTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Giỏ hàng của bạn"
-        android:textSize="24sp"
-        android:textStyle="bold"
         android:layout_gravity="center_horizontal"
-        android:paddingBottom="16dp" />
+        android:paddingBottom="16dp"
+        android:text="Giỏ hàng"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewCart"

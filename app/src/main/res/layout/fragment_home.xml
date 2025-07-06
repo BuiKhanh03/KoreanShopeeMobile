@@ -1,22 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:fillViewport="true">
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <include layout="@layout/top_navbar" />
+        <include layout="@layout/top_navbar" />
 
-    <include
-        layout="@layout/layout_section_list"
-        android:id="@+id/section_top_books" />
+        <ImageView
+            android:id="@+id/banner_image"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginTop="8dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bannner1"
+            tools:ignore="ContentDescription" />
 
-    <include
-        layout="@layout/layout_section_list"
-        android:id="@+id/section_top_courses" />
+        <TextView
+            android:id="@+id/text_greeting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Chào mừng trở lại"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:padding="16dp"
+            android:textColor="#000000" />
 
+        <include
+            layout="@layout/layout_section_list"
+            android:id="@+id/section_top_books" />
 
-</LinearLayout>
+        <include
+            layout="@layout/layout_section_list"
+            android:id="@+id/section_top_courses" />
 
+        <include
+            layout="@layout/layout_section_list"
+            android:id="@+id/section_recommendation" />
+
+    </LinearLayout>
+</ScrollView>
