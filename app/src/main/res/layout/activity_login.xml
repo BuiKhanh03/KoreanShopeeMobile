@@ -8,7 +8,7 @@
     android:background="@color/white"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".Login">
+    tools:context=".ui.auth.LoginActivity">
 
 
     <LinearLayout

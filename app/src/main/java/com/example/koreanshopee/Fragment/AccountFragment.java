@@ -6,13 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.koreanshopee.InfoApp;
-import com.example.koreanshopee.Login;
+import com.example.koreanshopee.ui.auth.LoginActivity;
+import com.example.koreanshopee.auth.LogoutHelper;
 import com.example.koreanshopee.OrderHistory.OrderHistory;
 import com.example.koreanshopee.ProfileCustomer;
 import com.example.koreanshopee.R;
@@ -38,6 +40,14 @@ public class AccountFragment extends Fragment {
         LinearLayout btnInfoApp = view.findViewById(R.id.btn_app_info);
         LinearLayout btnLogout = view.findViewById(R.id.btn_logout);
 
+        // Debug: Kiểm tra xem có tìm thấy nút logout không
+        if (btnLogout != null) {
+            Toast.makeText(getActivity(), "Tìm thấy nút logout!", Toast.LENGTH_SHORT).show();
+            // Thêm background màu để dễ nhìn thấy
+            btnLogout.setBackgroundColor(0xFFFFE0E0); // Màu hồng nhạt
+        } else {
+            Toast.makeText(getActivity(), "KHÔNG tìm thấy nút logout!", Toast.LENGTH_LONG).show();
+        }
 
         btnAccountInfo.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), ProfileCustomer.class);
@@ -60,9 +70,8 @@ public class AccountFragment extends Fragment {
         });
 
         btnLogout.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), Login.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear stack
-            startActivity(intent);
+            Toast.makeText(getActivity(), "Đang logout...", Toast.LENGTH_SHORT).show();
+            LogoutHelper.logout(getActivity());
         });
     }
 }

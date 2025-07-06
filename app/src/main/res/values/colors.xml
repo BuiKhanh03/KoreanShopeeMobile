@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="blue800">#22428C</color>
+    <color name="blue600">#3A5A9C</color>
     <color name="blue300">#4A64A1</color>
     <color name="pink800">#d090a0</color>
     <color name="pink300">#e3c4d2</color>

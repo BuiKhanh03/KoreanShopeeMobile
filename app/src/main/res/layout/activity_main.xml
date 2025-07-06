@@ -8,7 +8,7 @@
     android:background="@color/white"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".ui.main.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,6 +36,17 @@
             android:textColor="@color/pink800"
             android:textSize="23sp"
             android:textStyle="bold" />
+            
+        <TextView
+            android:id="@+id/tv_welcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Chào mừng bạn đã đăng nhập!"
+            android:textColor="@color/blue800"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout
@@ -65,6 +76,30 @@
             android:textColor="@color/blue800"
             android:textSize="20sp"
             android:textStyle="bold" />
+            
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/gray500"
+            android:text="ĐĂNG XUẤT"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+            
+        <Button
+            android:id="@+id/btn_go_to_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/blue600"
+            android:text="ĐI ĐẾN MÀN HÌNH CHÍNH"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
     </LinearLayout>
 
 </LinearLayout>
