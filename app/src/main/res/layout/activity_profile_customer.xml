@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/main"
     android:background="@color/pink300"
+    android:fillViewport="true"
     tools:context=".ProfileCustomer">
 
     <LinearLayout
@@ -23,32 +24,6 @@
             android:layout_height="wrap_content"
             android:padding="16dp">
 
-            <ImageView
-                android:id="@+id/btn_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_back"
-                android:layout_marginStart="0dp"
-                android:layout_marginLeft="0dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
-
-            <TextView
-                android:id="@+id/ActivityHead"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/nunito"
-                android:text="@string/update_det"
-                android:textAlignment="center"
-                android:textColor="@color/blue800"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ProgressBar
@@ -61,18 +36,41 @@
             android:indeterminate="true"
             android:visibility="gone" />
 
-
         <Space
             android:layout_width="match_parent"
             android:layout_height="30dp" />
 
+        <ImageView
+            android:id="@+id/uavatar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_userr"
+            android:scaleType="centerCrop"
+            android:background="@drawable/circle_background"
+            android:layout_marginTop="16dp" />
+
         <EditText
-            android:id="@+id/ufullname"
+            android:id="@+id/ufirstname"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/rounded_edittext"
-            android:hint="@string/full_name"
+            android:hint="@string/f_name"
+            android:padding="16dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray500" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <EditText
+            android:id="@+id/ulastname"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/rounded_edittext"
+            android:hint="@string/l_name"
             android:padding="16dp"
             android:textColor="@color/black"
             android:textColorHint="@color/gray500" />
@@ -80,7 +78,6 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="20dp" />
-
 
         <EditText
             android:id="@+id/uphone"
@@ -108,37 +105,30 @@
             android:hint="Email"
             android:padding="16dp"
             android:textColor="@color/black"
-            android:textColorHint="@color/gray500" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
-
-        <EditText
-            android:id="@+id/uaddress"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/rounded_edittext"
-            android:hint="@string/address"
-            android:inputType="textPostalAddress"
-            android:padding="16dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/gray500" />
+            android:textColorHint="@color/gray500"
+            android:enabled="false"
+            android:focusable="false" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="20dp" />
 
         <Button
-            android:id="@+id/btn_update_info"
-            android:layout_width="wrap_content"
+            android:id="@+id/btnUpdate"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/blue800"
-            android:text="@string/updansave"
-            android:textColor="@color/pink800"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:text="Cập nhật thông tin"
+            android:backgroundTint="@color/pink500"
+            android:textColor="@color/white"
+            android:layout_marginTop="8dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
 
     </LinearLayout>
 

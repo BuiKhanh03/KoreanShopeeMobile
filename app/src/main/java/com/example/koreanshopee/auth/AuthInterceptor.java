@@ -25,7 +25,7 @@ public class AuthInterceptor implements Interceptor {
         // If we have a token, add it to the request header
         if (accessToken != null) {
             Request newRequest = originalRequest.newBuilder()
-                    .header("Authorization", "Bearer " + accessToken)
+                    .header("Authorization",  accessToken)
                     .build();
             return chain.proceed(newRequest);
         }

@@ -16,7 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.koreanshopee.R;
 import com.example.koreanshopee.api.ApiClient;
-import com.example.koreanshopee.auth.TokenManager;
+import com.example.koreanshopee.utils.TokenManager;
 import com.example.koreanshopee.model.LoginRequest;
 import com.example.koreanshopee.model.LoginResponse;
 import com.example.koreanshopee.layout_sceen;
@@ -119,8 +119,8 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     LoginResponse loginResponse = response.body();
                     
-                    // Save tokens
-                    tokenManager.saveTokens(loginResponse.getAccessToken(), loginResponse.getRefreshToken());
+                    // Save token
+                    tokenManager.saveToken(loginResponse.getAccessToken());
                     
                     // Show success message
                     Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
