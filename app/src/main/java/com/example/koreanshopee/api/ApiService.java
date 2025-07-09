@@ -6,6 +6,7 @@ import com.example.koreanshopee.model.RegisterRequest;
 import com.example.koreanshopee.model.RegisterResponse;
 import com.example.koreanshopee.model.UpdateProfileRequest;
 import com.example.koreanshopee.model.UserProfileResponse;
+import com.example.koreanshopee.model.CategoryListResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -15,6 +16,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
+import retrofit2.http.Query;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -37,5 +39,14 @@ public interface ApiService {
     Call<ResponseBody> uploadAvatar(
         @Header("Authorization") String authorization,
         @Part MultipartBody.Part image
+    );
+
+    @GET("api/category")
+    Call<CategoryListResponse> getCategories();
+
+    @GET("api/product")
+    Call<com.example.koreanshopee.model.ProductListResponse> getProducts(
+        @Query("PageNumber") int pageNumber,
+        @Query("PageSize") int pageSize
     );
 } 

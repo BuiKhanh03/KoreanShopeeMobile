@@ -52,7 +52,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.BookViewHolder
         public BookViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvBookTitle);
-            tvAuthor = itemView.findViewById(R.id.tvAuthor);
+
             tvPrice = itemView.findViewById(R.id.tvPrice);
             imgBook = itemView.findViewById(R.id.imgBook);
         }

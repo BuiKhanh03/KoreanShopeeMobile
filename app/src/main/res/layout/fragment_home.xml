@@ -32,6 +32,19 @@
             android:padding="16dp"
             android:textColor="#000000" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_categories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:minHeight="48dp"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            tools:listitem="@android:layout/simple_list_item_1"
+            />
+
         <include
             layout="@layout/layout_section_list"
             android:id="@+id/section_top_books" />
@@ -40,9 +53,6 @@
             layout="@layout/layout_section_list"
             android:id="@+id/section_top_courses" />
 
-        <include
-            layout="@layout/layout_section_list"
-            android:id="@+id/section_recommendation" />
 
     </LinearLayout>
 </ScrollView>
