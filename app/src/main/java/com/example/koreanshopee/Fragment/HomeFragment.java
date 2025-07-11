@@ -6,6 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.EditText;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.GridLayout;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -43,6 +47,8 @@ public class HomeFragment extends Fragment {
     private List<Product> productList = new ArrayList<>();
     private int currentPage = 1;
     private int pageSize = 4; // Số sản phẩm mỗi trang (2 cột x 2 dòng)
+    private EditText searchBar;
+    private GridLayout gridProducts;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -76,25 +82,30 @@ public class HomeFragment extends Fragment {
         TextView tvBookTitle = sectionBooks.findViewById(R.id.tvSectionTitle);
         tvBookTitle.setText("Phổ biến");
 
-        RecyclerView recyclerBooks = sectionBooks.findViewById(R.id.recyclerSectionList);
-        // Hiển thị sản phẩm phổ biến dạng lưới 2 cột
-        TopBookAdapter topBookAdapter = new TopBookAdapter(productList);
-        recyclerBooks.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        recyclerBooks.setAdapter(topBookAdapter);
+        gridProducts = sectionBooks.findViewById(R.id.grid_products);
 
-        // Thêm nút chuyển trang
         View btnPrev = sectionBooks.findViewById(R.id.btnPrevPage);
         View btnNext = sectionBooks.findViewById(R.id.btnNextPage);
         if (btnPrev != null && btnNext != null) {
             btnPrev.setOnClickListener(v -> {
                 if (currentPage > 1) {
                     currentPage--;
-                    fetchProducts();
+                    String searchQuery = searchBar.getText().toString().trim();
+                    if (searchQuery.isEmpty()) {
+                        fetchProducts();
+                    } else {
+                        searchProducts(searchQuery);
+                    }
                 }
             });
             btnNext.setOnClickListener(v -> {
                 currentPage++;
-                fetchProducts();
+                String searchQuery = searchBar.getText().toString().trim();
+                if (searchQuery.isEmpty()) {
+                    fetchProducts();
+                } else {
+                    searchProducts(searchQuery);
+                }
             });
         }
 
@@ -104,6 +115,30 @@ public class HomeFragment extends Fragment {
         recyclerCategories.setAdapter(categoryAdapter);
         fetchCategories();
         fetchProducts();
+
+        searchBar = view.findViewById(R.id.search_bar);
+        searchBar.addTextChangedListener(new TextWatcher() {
+            private android.os.Handler handler = new android.os.Handler();
+            private Runnable searchRunnable;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Cancel previous search request
+                if (searchRunnable != null) {
+                    handler.removeCallbacks(searchRunnable);
+                }
+                
+                // Create new search request with 500ms delay
+                searchRunnable = () -> filterProducts(s.toString());
+                handler.postDelayed(searchRunnable, 500);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
 
         return view;
     }
@@ -159,11 +194,73 @@ public class HomeFragment extends Fragment {
     private void updateTopBooks() {
         if (getView() == null) return;
         Log.d("ProductAPI", "updateTopBooks: productList.size=" + productList.size());
-        View sectionBooks = getView().findViewById(R.id.section_top_books);
-        RecyclerView recyclerBooks = sectionBooks.findViewById(R.id.recyclerSectionList);
-        TopBookAdapter topBookAdapter = new TopBookAdapter(productList);
-        recyclerBooks.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        recyclerBooks.setAdapter(topBookAdapter);
+        
+        // Clear existing views
+        gridProducts.removeAllViews();
+        
+        // Add product views to grid
+        for (int i = 0; i < Math.min(productList.size(), 4); i++) {
+            Product product = productList.get(i);
+            View productView = createProductView(product);
+            gridProducts.addView(productView);
+        }
+    }
+
+    private View createProductView(Product product) {
+        View productView = LayoutInflater.from(getContext()).inflate(R.layout.item_product_grid, gridProducts, false);
+        
+        ImageView imgProduct = productView.findViewById(R.id.img_product);
+        TextView tvProductName = productView.findViewById(R.id.tv_product_name);
+        TextView tvProductPrice = productView.findViewById(R.id.tv_product_price);
+        TextView tvProductStatus = productView.findViewById(R.id.tv_product_status);
+        
+        tvProductName.setText(product.getName());
+        tvProductPrice.setText(product.getPrice() + " VNĐ");
+        tvProductStatus.setText(product.getStatus());
+
+        productView.setOnClickListener(v -> {
+            android.content.Intent intent = new android.content.Intent(getContext(), com.example.koreanshopee.ProductDetailActivity.class);
+            intent.putExtra("product_id", product.getId());
+            getContext().startActivity(intent);
+        });
+        
+        return productView;
+    }
+
+    private void filterProducts(String query) {
+        if (query.trim().isEmpty()) {
+            // If search is empty, show all products
+            currentPage = 1;
+            fetchProducts();
+        } else {
+            // If search has text, search for products
+            currentPage = 1;
+            searchProducts(query.trim());
+        }
+    }
+
+    private void searchProducts(String searchQuery) {
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        apiService.searchProducts(searchQuery, currentPage, pageSize).enqueue(new Callback<ProductListResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ProductListResponse> call, @NonNull Response<ProductListResponse> response) {
+                Log.d("ProductSearchAPI", "onResponse: code=" + response.code() + ", body=" + response.body());
+                if (response.isSuccessful() && response.body() != null) {
+                    productList.clear();
+                    if (response.body().getValue() != null) {
+                        productList.addAll(response.body().getValue());
+                    }
+                    Log.d("ProductSearchAPI", "Số sản phẩm tìm được: " + productList.size());
+                    updateTopBooks();
+                } else {
+                    Log.e("ProductSearchAPI", "Response not successful: code=" + response.code());
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<ProductListResponse> call, @NonNull Throwable t) {
+                Log.e("ProductSearchAPI", "onFailure: ", t);
+            }
+        });
     }
 
     private static class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
@@ -174,110 +271,44 @@ public class HomeFragment extends Fragment {
         @NonNull
         @Override
         public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            TextView tv = new TextView(parent.getContext());
-            tv.setPadding(32, 16, 32, 16);
-            tv.setTextSize(16);
-            tv.setTextColor(0xFF1976D2); // blue800
-            return new CategoryViewHolder(tv);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category, parent, false);
+            return new CategoryViewHolder(view);
         }
         @Override
         public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
-            holder.textView.setText(categories.get(position).getName());
+            Category category = categories.get(position);
+            holder.tvCategoryName.setText(category.getName());
+            
+            // Set màu nền khác nhau cho từng category
+            int[] colors = {
+                0xFFE3F2FD, // Light Blue
+                0xFFF3E5F5, // Light Purple
+                0xFFE8F5E8, // Light Green
+                0xFFFFF3E0, // Light Orange
+                0xFFFCE4EC, // Light Pink
+                0xFFF1F8E9, // Light Lime
+                0xFFE0F2F1, // Light Teal
+                0xFFFFF8E1  // Light Yellow
+            };
+            
+            int colorIndex = position % colors.length;
+            holder.ivCategoryIcon.setBackgroundTintList(android.content.res.ColorStateList.valueOf(colors[colorIndex]));
         }
         @Override
         public int getItemCount() {
             return categories.size();
         }
         static class CategoryViewHolder extends RecyclerView.ViewHolder {
-            TextView textView;
+            ImageView ivCategoryIcon;
+            TextView tvCategoryName;
             public CategoryViewHolder(@NonNull View itemView) {
                 super(itemView);
-                textView = (TextView) itemView;
+                ivCategoryIcon = itemView.findViewById(R.id.iv_category_icon);
+                tvCategoryName = itemView.findViewById(R.id.tv_category_name);
             }
         }
     }
 
-    private class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
-        private final List<Product> products;
-        public ProductAdapter(List<Product> products) {
-            this.products = products;
-        }
-        @NonNull
-        @Override
-        public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_product, parent, false);
-            return new ProductViewHolder(view);
-        }
-        @Override
-        public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-            Product product = products.get(position);
-            holder.textProductName.setText(product.getName());
-            holder.textProductPrice.setText(product.getPrice() + "đ");
-            holder.textProductStatus.setText(product.getStatus());
-            // Nếu có ảnh, load ảnh đầu tiên nếu có
-            if (product.getProductImages() != null && !product.getProductImages().isEmpty()) {
-                // TODO: Lấy link ảnh từ productImages nếu có
-                // Glide.with(holder.imageProduct.getContext()).load(product.getProductImages().get(0)).into(holder.imageProduct);
-                holder.imageProduct.setImageResource(R.drawable.ic_launcher_foreground); // placeholder
-            } else {
-                holder.imageProduct.setImageResource(R.drawable.ic_launcher_foreground);
-            }
-        }
-        @Override
-        public int getItemCount() {
-            return products.size();
-        }
-        class ProductViewHolder extends RecyclerView.ViewHolder {
-            ImageView imageProduct;
-            TextView textProductName, textProductPrice, textProductStatus;
-            public ProductViewHolder(@NonNull View itemView) {
-                super(itemView);
-                imageProduct = itemView.findViewById(R.id.imageProduct);
-                textProductName = itemView.findViewById(R.id.textProductName);
-                textProductPrice = itemView.findViewById(R.id.textProductPrice);
-                textProductStatus = itemView.findViewById(R.id.textProductStatus);
-            }
-        }
-    }
 
-    private class TopBookAdapter extends RecyclerView.Adapter<TopBookAdapter.TopBookViewHolder> {
-        private final List<Product> books;
-        public TopBookAdapter(List<Product> books) {
-            this.books = books;
-        }
-        @NonNull
-        @Override
-        public TopBookViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_top_book, parent, false);
-            return new TopBookViewHolder(view);
-        }
-        @Override
-        public void onBindViewHolder(@NonNull TopBookViewHolder holder, int position) {
-            Product book = books.get(position);
-            Log.d("AdapterBind", "Bind sản phẩm: " + book.getName() + ", giá: " + book.getPrice());
-            holder.tvTitle.setText(book.getName());
-            holder.tvPrice.setText(book.getPrice() + "đ");
-            if (book.getProductImages() != null && !book.getProductImages().isEmpty()) {
-                holder.imgBook.setImageResource(R.drawable.ic_launcher_foreground);
-            } else {
-                holder.imgBook.setImageResource(R.drawable.ic_launcher_foreground);
-            }
-        }
-        @Override
-        public int getItemCount() {
-            Log.d("AdapterBind", "getItemCount: " + books.size());
-            return books.size();
-        }
-        class TopBookViewHolder extends RecyclerView.ViewHolder {
-            TextView tvTitle, tvPrice;
-            ImageView imgBook;
-            public TopBookViewHolder(@NonNull View itemView) {
-                super(itemView);
-                tvTitle = itemView.findViewById(R.id.tvBookTitle);
-                tvPrice = itemView.findViewById(R.id.tvPrice);
-                imgBook = itemView.findViewById(R.id.imgBook);
-            }
-        }
-    }
 }
 
