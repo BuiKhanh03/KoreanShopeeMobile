@@ -9,6 +9,8 @@ import com.example.koreanshopee.model.UserProfileResponse;
 import com.example.koreanshopee.model.CategoryListResponse;
 import com.example.koreanshopee.model.CartResponse;
 import com.example.koreanshopee.model.Product;
+import com.example.koreanshopee.model.VnpayRequest;
+import com.example.koreanshopee.model.VnpayResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -39,7 +41,7 @@ public interface ApiService {
     Call<UserProfileResponse> updateUserProfile(@Header("Authorization") String authorization, @Body UpdateProfileRequest updateRequest);
 
     @Multipart
-    @POST("/api/user/upload-avatar")
+    @POST("/api/user/image")
     Call<ResponseBody> uploadAvatar(
         @Header("Authorization") String authorization,
         @Part MultipartBody.Part image
@@ -88,9 +90,65 @@ public interface ApiService {
     );
 
     @POST("api/order")
-    Call<Void> createOrder(
+    Call<com.example.koreanshopee.model.OrderResponse> createOrder(
         @Header("Authorization") String authorization,
         @Body com.example.koreanshopee.model.OrderRequest orderRequest
+    );
+
+    @POST("api/vnpay/create-payment-url")
+    Call<VnpayResponse> createVnpayPayment(
+        @Header("Authorization") String authorization,
+        @Query("OrderType") String orderType,
+        @Query("Amount") double amount,
+        @Query("OrderDescription") String orderDescription,
+        @Query("PaymentIdR") String paymentIdR
+    );
+
+    @GET("api/order/{orderId}")
+    Call<com.example.koreanshopee.model.OrderStatusResponse> getOrderStatus(
+        @Header("Authorization") String authorization,
+        @Path("orderId") String orderId
+    );
+
+    @GET("api/order")
+    Call<com.example.koreanshopee.model.OrderListResponse> getOrderHistory(
+        @Header("Authorization") String authorization
+    );
+
+    @GET("api/order")
+    Call<com.example.koreanshopee.model.OrderListResponse> getOrderByPaymentRecordId(
+        @Header("Authorization") String authorization,
+        @Query("PaymentRecordId") String paymentRecordId
+    );
+
+    @POST("api/review")
+    Call<Void> createReview(
+        @Header("Authorization") String authorization,
+        @Body com.example.koreanshopee.model.ReviewRequest reviewRequest
+    );
+
+    @PUT("api/review/{reviewId}")
+    Call<Void> updateReview(
+        @Header("Authorization") String authorization,
+        @Path("reviewId") String reviewId,
+        @Body com.example.koreanshopee.model.ReviewRequest reviewRequest
+    );
+
+    @GET("api/product")
+    Call<com.example.koreanshopee.model.ProductListResponse> getProductsByCategory(
+        @Query("CategoryId") String categoryId
+    );
+
+    // Seller APIs
+    @GET("api/product/user")
+    Call<com.example.koreanshopee.model.ProductListResponse> getSellerProducts(
+        @Header("Authorization") String authorization
+    );
+
+    @POST("api/product")
+    Call<com.example.koreanshopee.model.ProductResponse> createProduct(
+        @Header("Authorization") String authorization,
+        @Body com.example.koreanshopee.model.CreateProductRequest createProductRequest
     );
 
 } 

@@ -20,6 +20,7 @@ import com.example.koreanshopee.utils.TokenManager;
 import com.example.koreanshopee.model.LoginRequest;
 import com.example.koreanshopee.model.LoginResponse;
 import com.example.koreanshopee.layout_sceen;
+import com.example.koreanshopee.ui.seller.SellerActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,10 +44,8 @@ public class LoginActivity extends AppCompatActivity {
 
         // Check if user is already logged in
         if (tokenManager.isLoggedIn()) {
-            // User is already logged in, go to main screen
-            Intent intent = new Intent(LoginActivity.this, layout_sceen.class);
-            startActivity(intent);
-            finish();
+            // User is already logged in, check role and redirect
+            checkUserRoleAndRedirect();
             return;
         }
 
@@ -87,6 +86,21 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void checkUserRoleAndRedirect() {
+        String role = tokenManager.getUserRole();
+        if ("Seller".equals(role)) {
+            // Redirect to SellerActivity
+            Intent intent = new Intent(LoginActivity.this, SellerActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            // Redirect to Customer main screen
+            Intent intent = new Intent(LoginActivity.this, layout_sceen.class);
+            startActivity(intent);
+            finish();
+        }
+    }
+
     private void performLogin() {
         String email = inputEmail.getText().toString().trim();
         String password = inputPassword.getText().toString().trim();
@@ -119,16 +133,26 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     LoginResponse loginResponse = response.body();
                     
-                    // Save token
+                    // Save token and role
                     tokenManager.saveToken(loginResponse.getAccessToken());
+                    tokenManager.saveUserRole(loginResponse.getRole());
                     
                     // Show success message
                     Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
                     
-                    // Navigate to main screen (layout_sceen)
-                    Intent intent = new Intent(LoginActivity.this, layout_sceen.class);
-                    startActivity(intent);
-                    finish();
+                    // Check role and redirect accordingly
+                    String role = loginResponse.getRole();
+                    if ("Seller".equals(role)) {
+                        // Redirect to SellerActivity
+                        Intent intent = new Intent(LoginActivity.this, SellerActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        // Redirect to Customer main screen
+                        Intent intent = new Intent(LoginActivity.this, layout_sceen.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 } else {
                     // Handle error response
                     String errorMessage = "Đăng nhập thất bại";

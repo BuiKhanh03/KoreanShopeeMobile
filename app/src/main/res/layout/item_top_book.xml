@@ -73,5 +73,35 @@
             android:textSize="12sp"
             android:layout_marginTop="2dp" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <Button
+                android:id="@+id/btnAddToCart"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_weight="1"
+                android:text="Thêm giỏ"
+                android:textSize="12sp"
+                android:background="@drawable/bg_pink"
+                android:textColor="#FFFFFF"
+                android:layout_marginEnd="4dp" />
+
+            <Button
+                android:id="@+id/btnReview"
+                android:layout_width="0dp"
+                android:layout_height="36dp"
+                android:layout_weight="1"
+                android:text="Đánh giá"
+                android:textSize="12sp"
+                android:background="@drawable/bg_pink"
+                android:textColor="#FFFFFF"
+                android:layout_marginStart="4dp" />
+
+        </LinearLayout>
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>
