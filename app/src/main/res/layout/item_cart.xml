@@ -51,9 +51,13 @@
 
             <Button
                 android:id="@+id/decrease"
-                android:layout_width="55dp"
-                android:layout_height="48dp"
-                android:text="-" />
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:backgroundTint="#FFF3E0"
+                android:elevation="2dp"
+                android:text="-"
+                android:textColor="#FF9800"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/textQuantity"
@@ -61,13 +65,19 @@
                 android:layout_height="wrap_content"
                 android:text="Số lượng: 1"
                 android:textSize="14sp"
-                android:layout_marginTop="4dp" />
+                android:layout_marginTop="4dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp" />
 
             <Button
                 android:id="@+id/increase"
-                android:layout_width="55dp"
-                android:layout_height="48dp"
-                android:text="+" />
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:text="+"
+                android:textSize="18sp"
+                android:textColor="#FF9800"
+                android:backgroundTint="#FFF3E0"
+                android:elevation="2dp" />
         </LinearLayout>
     </LinearLayout>
 

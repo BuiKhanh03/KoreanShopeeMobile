@@ -10,7 +10,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
-    private static final String BASE_URL = "http://10.0.2.2:32768/";
+    // Sử dụng IP máy tính để mobile có thể kết nối được
+    // 10.0.2.2 = Android Emulator
+    // 192.168.1.4 = IP máy tính thật (từ ipconfig)
+    private static final String BASE_URL = "http://192.168.1.4:32768/";
     private static Retrofit retrofit = null;
     private static Retrofit authenticatedRetrofit = null;
     

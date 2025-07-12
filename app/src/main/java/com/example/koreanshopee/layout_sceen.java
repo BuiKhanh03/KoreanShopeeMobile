@@ -1,5 +1,6 @@
 package com.example.koreanshopee;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -16,6 +17,7 @@ import com.example.koreanshopee.Fragment.HomeFragment;
 import com.example.koreanshopee.Fragment.NotifyFragment;
 import com.example.koreanshopee.Fragment.SettingFragment;
 import com.example.koreanshopee.Fragment.ShopsFragment;
+import com.example.koreanshopee.ui.main.CartActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class layout_sceen extends AppCompatActivity {
@@ -42,7 +44,9 @@ public class layout_sceen extends AppCompatActivity {
                 } else if (itemId == R.id.nav_account) {
                     selectedFragment = new AccountFragment();
                 } else if (itemId == R.id.nav_setting) {
-                    selectedFragment = new SettingFragment();
+                    Intent intent = new Intent(layout_sceen.this, CartActivity.class);
+                    startActivity(intent);
+                    return true;
                 }
 
                 if (selectedFragment != null) {

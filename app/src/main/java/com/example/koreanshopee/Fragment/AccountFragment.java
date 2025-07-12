@@ -16,7 +16,6 @@ import androidx.fragment.app.Fragment;
 import com.example.koreanshopee.InfoApp;
 import com.example.koreanshopee.ui.auth.LoginActivity;
 import com.example.koreanshopee.auth.LogoutHelper;
-import com.example.koreanshopee.OrderHistory.OrderHistory;
 import com.example.koreanshopee.ProfileCustomer;
 import com.example.koreanshopee.R;
 import com.example.koreanshopee.ReviewOrder;
@@ -25,6 +24,7 @@ import com.example.koreanshopee.api.ApiService;
 import com.example.koreanshopee.model.UserProfile;
 import com.example.koreanshopee.model.UserProfileResponse;
 import com.example.koreanshopee.utils.TokenManager;
+import com.example.koreanshopee.ui.main.OrderHistoryActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -71,7 +71,7 @@ public class AccountFragment extends Fragment {
         });
 
         btnOrderHistory.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), OrderHistory.class);
+            Intent intent = new Intent(getActivity(), OrderHistoryActivity.class);
             startActivity(intent);
         });
 

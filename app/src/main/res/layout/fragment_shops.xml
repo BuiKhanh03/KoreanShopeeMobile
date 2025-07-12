@@ -1,192 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FDFDFD"
-    android:fillViewport="true">
+    android:orientation="vertical"
+    android:background="#FDFDFD">
 
-    <LinearLayout
+    <include layout="@layout/top_navbar" />
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:text="Phân loại sản phẩm"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#E91E63"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp" />
 
-        <include layout="@layout/top_navbar" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_categories"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:clipToPadding="false"
+        android:scrollbars="vertical"
+        tools:listitem="@layout/item_category" />
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginTop="16dp"
-            android:clickable="true"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp"
-            app:cardPreventCornerOverlap="false">
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/bg1"
-                    android:scaleType="centerCrop" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="BÀI GIẢNG"
-                    android:textColor="@color/pink900"
-                    android:textSize="25sp"
-                    android:textStyle="bold" />
-            </FrameLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginTop="16dp"
-            android:clickable="true"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp">
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/bg2"
-                    android:scaleType="centerCrop" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="SÁCH HỌC TIẾNG HÀN"
-                    android:textColor="@color/gray800"
-                    android:textSize="25sp"
-                    android:textStyle="bold" />
-            </FrameLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginTop="16dp"
-            android:clickable="true"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp">
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/bg3"
-                    android:scaleType="centerCrop" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="SÁCH ÔN THI TOPIK"
-                    android:textColor="@color/blue300"
-                    android:textSize="25sp"
-                    android:textStyle="bold" />
-            </FrameLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginTop="16dp"
-            android:clickable="true"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp">
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/bg4"
-                    android:scaleType="centerCrop" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="TRUYỆN TRANH"
-                    android:textColor="@color/white"
-                    android:textSize="25sp"
-                    android:textStyle="bold" />
-            </FrameLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginTop="16dp"
-            android:clickable="true"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp">
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/bg6"
-                    android:scaleType="centerCrop" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="SÁCH CŨ"
-                    android:textColor="@color/red500"
-                    android:textSize="25sp"
-                    android:textStyle="bold" />
-            </FrameLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginTop="16dp"
-            android:clickable="true"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp">
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/bg7"
-                    android:scaleType="centerCrop" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="TÀI LIỆU THAM KHẢO"
-                    android:textColor="@color/blue800"
-                    android:textSize="25sp"
-                    android:textStyle="bold" />
-            </FrameLayout>
-        </androidx.cardview.widget.CardView>
-
-    </LinearLayout>
-</ScrollView>
+</LinearLayout>

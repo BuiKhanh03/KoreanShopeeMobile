@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -72,6 +73,34 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
+        <activity android:name=".ProductDetailActivity" android:exported="false" />
+        <activity android:name=".ui.main.CartActivity" />
+        <activity android:name=".ui.main.ConfirmOrderActivity" />
+        <activity android:name=".ui.main.VnpayResultActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="koreanshopee" android:host="vnpay_return" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.main.VnpayWebViewActivity" android:exported="false" />
+        <activity android:name=".ui.main.OrderHistoryActivity" android:exported="false" />
+        <activity android:name=".ui.main.OrderDetailActivity" android:exported="false" />
+        <activity android:name=".ui.main.PaymentResultActivity" android:exported="false" />
+        <activity android:name=".ui.main.ProductByCategoryActivity" android:exported="false" />
+        <activity android:name=".ui.seller.SellerActivity" android:exported="false" />
+        <activity android:name=".ui.seller.AddProductActivity" android:exported="false" />
+        <activity android:name=".ui.seller.EditProductActivity" android:exported="false" />
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.koreanshopee.OrderHistory.OrderHistoryAdapter;
+import com.example.koreanshopee.ui.main.OrderHistoryAdapter;
 import com.example.koreanshopee.OrderHistory.OrderItem;
 import com.example.koreanshopee.R;
 
@@ -38,7 +38,7 @@ public class DeliveredFragment extends Fragment {
         orderItemList.add(new OrderItem(R.drawable.book1, "한국 능력 시험", "다티하이옌", "900.000", "x1"));
         orderItemList.add(new OrderItem(R.drawable.book1, "TOPIK II 마스터", "홍길동", "700.000", "x2"));
 
-        adapter = new OrderHistoryAdapter(getContext(), orderItemList);
+        adapter = new OrderHistoryAdapter();
         recyclerView.setAdapter(adapter);
 
         return view;

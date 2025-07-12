@@ -14,4 +14,7 @@
     <color name="pink900">#BF0200</color>
     <color name="skin500">#D3B8B8</color>
     <color name="pink500">#EC407A</color>
+    <color name="colorPrimary">#EC407A</color>
+    <color name="colorPrimaryDark">#C2185B</color>
+    <color name="colorAccent">#FF4081</color>
 </resources>

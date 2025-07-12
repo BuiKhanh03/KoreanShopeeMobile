@@ -39,6 +39,20 @@ import java.io.InputStream;
 
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
+import android.provider.MediaStore;
+import android.graphics.Bitmap;
+import android.os.Environment;
+import androidx.core.content.FileProvider;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import android.Manifest;
+import android.content.pm.PackageManager;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 public class ProfileCustomer extends AppCompatActivity {
 
     private static final String TAG = "ProfileCustomer";
@@ -53,6 +67,10 @@ public class ProfileCustomer extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private Uri imageUri;
+    private static final int REQUEST_IMAGE_CAPTURE = 2;
+    private Uri cameraImageUri;
+
+    private static final int REQUEST_CAMERA_PERMISSION = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +92,7 @@ public class ProfileCustomer extends AppCompatActivity {
         btnUpdate = findViewById(R.id.btnUpdate);
 
         // Set click listener for avatar to upload image
-        ivAvatar.setOnClickListener(v -> selectImageFromGallery());
+        ivAvatar.setOnClickListener(v -> showImagePickerDialog());
 
         // Set click listener for update info button
         btnUpdate.setOnClickListener(v -> updateUserInfo());
@@ -197,11 +215,18 @@ public class ProfileCustomer extends AppCompatActivity {
         Log.d(TAG, "displayUserProfile completed");
     }
 
-    private void selectImageFromGallery() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Chọn ảnh đại diện"), PICK_IMAGE_REQUEST);
+    private void showImagePickerDialog() {
+        String[] options = {"Chụp ảnh", "Chọn từ thư viện"};
+        new AlertDialog.Builder(this)
+            .setTitle("Chọn ảnh đại diện")
+            .setItems(options, (dialog, which) -> {
+                if (which == 0) {
+                    checkCameraPermissionAndOpenCamera();
+                } else {
+                    selectImageFromGallery();
+                }
+            })
+            .show();
     }
 
     @Override
@@ -211,17 +236,73 @@ public class ProfileCustomer extends AppCompatActivity {
             imageUri = data.getData();
             ivAvatar.setImageURI(imageUri);
             uploadAvatar(imageUri);
+        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            if (cameraImageUri != null) {
+                ivAvatar.setImageURI(cameraImageUri);
+                uploadAvatar(cameraImageUri);
+            } else if (data != null && data.getExtras() != null) {
+                Bitmap photo = (Bitmap) data.getExtras().get("data");
+                // Lưu bitmap ra file tạm và lấy uri
+                Uri tempUri = getImageUriFromBitmap(photo);
+                if (tempUri != null) {
+                    ivAvatar.setImageURI(tempUri);
+                    uploadAvatar(tempUri);
+                }
+            }
+        }
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (Exception ex) {
+                Toast.makeText(this, "Không thể tạo file ảnh", Toast.LENGTH_SHORT).show();
+            }
+            if (photoFile != null) {
+                cameraImageUri = FileProvider.getUriForFile(this, getPackageName() + ".fileprovider", photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, cameraImageUri);
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+            }
+        }
+    }
+
+    private File createImageFile() throws Exception {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+        return image;
+    }
+
+    private Uri getImageUriFromBitmap(Bitmap bitmap) {
+        try {
+            File file = createImageFile();
+            java.io.FileOutputStream out = new java.io.FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            out.flush();
+            out.close();
+            return FileProvider.getUriForFile(this, getPackageName() + ".fileprovider", file);
+        } catch (Exception e) {
+            return null;
         }
     }
 
     private void uploadAvatar(Uri uri) {
         try {
             progressBar.setVisibility(View.VISIBLE);
-            // Convert URI to File
+            Log.d("ProfileCustomer", "Upload avatar uri: " + uri);
             InputStream inputStream = getContentResolver().openInputStream(uri);
+            if (inputStream == null) {
+                Toast.makeText(this, "Không đọc được file ảnh!", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
+                return;
+            }
             byte[] bytes = getBytes(inputStream);
             RequestBody requestFile = RequestBody.create(MediaType.parse(getContentResolver().getType(uri)), bytes);
-            MultipartBody.Part body = MultipartBody.Part.createFormData("image", "avatar.jpg", requestFile);
+            MultipartBody.Part body = MultipartBody.Part.createFormData("File", "avatar.jpg", requestFile);
             String authHeader = tokenManager.getAuthorizationHeader();
             Call<ResponseBody> call = apiService.uploadAvatar(authHeader, body);
             call.enqueue(new Callback<ResponseBody>() {
@@ -231,7 +312,6 @@ public class ProfileCustomer extends AppCompatActivity {
                     if (response.isSuccessful() && response.body() != null) {
                         try {
                             String responseString = response.body().string();
-                            // Giả sử response là {"imageUrl":"https://..."}
                             JSONObject jsonObject = new JSONObject(responseString);
                             String imageUrl = jsonObject.getString("imageUrl");
                             Glide.with(ProfileCustomer.this)
@@ -241,7 +321,7 @@ public class ProfileCustomer extends AppCompatActivity {
                                 .into(ivAvatar);
                             Toast.makeText(ProfileCustomer.this, "Tải ảnh lên thành công!", Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {
-                            Toast.makeText(ProfileCustomer.this, "Lỗi đọc link ảnh: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ProfileCustomer.this, "Tải ảnh lên thành công!", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         Toast.makeText(ProfileCustomer.this, "Lỗi tải ảnh: " + response.code(), Toast.LENGTH_SHORT).show();
@@ -250,12 +330,12 @@ public class ProfileCustomer extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
                     progressBar.setVisibility(View.GONE);
-                    Toast.makeText(ProfileCustomer.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProfileCustomer.this, "Lỗi kết nối khi upload ảnh", Toast.LENGTH_SHORT).show();
                 }
             });
         } catch (Exception e) {
+            Toast.makeText(this, "Lỗi upload ảnh: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             progressBar.setVisibility(View.GONE);
-            Toast.makeText(this, "Lỗi chọn ảnh: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -304,5 +384,32 @@ public class ProfileCustomer extends AppCompatActivity {
                 Toast.makeText(ProfileCustomer.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void selectImageFromGallery() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Chọn ảnh đại diện"), PICK_IMAGE_REQUEST);
+    }
+
+    private void checkCameraPermissionAndOpenCamera() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+        } else {
+            dispatchTakePictureIntent();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CAMERA_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                dispatchTakePictureIntent();
+            } else {
+                Toast.makeText(this, "Bạn cần cấp quyền camera để chụp ảnh", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

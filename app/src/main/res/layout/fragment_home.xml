@@ -1,48 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:orientation="vertical"
+    android:background="#F5F5F5">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <!-- Sticky Search Bar -->
+    <include layout="@layout/top_navbar" />
+
+    <!-- Scrollable Content -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        android:paddingBottom="16dp">
 
-        <include layout="@layout/top_navbar" />
-
-        <ImageView
-            android:id="@+id/banner_image"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_marginTop="8dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/bannner1"
-            tools:ignore="ContentDescription" />
-
-        <TextView
-            android:id="@+id/text_greeting"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Chào mừng trở lại"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:padding="16dp"
-            android:textColor="#000000" />
+            android:paddingBottom="16dp">
 
-        <include
-            layout="@layout/layout_section_list"
-            android:id="@+id/section_top_books" />
+            <ImageView
+                android:id="@+id/banner_image"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="8dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bannner1"
+                tools:ignore="ContentDescription" />
 
-        <include
-            layout="@layout/layout_section_list"
-            android:id="@+id/section_top_courses" />
+            <TextView
+                android:id="@+id/text_greeting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Chào mừng trở lại"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:padding="16dp"
+                android:textColor="#000000" />
 
-        <include
-            layout="@layout/layout_section_list"
-            android:id="@+id/section_recommendation" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Danh mục"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:padding="16dp"
+                android:layout_marginTop="8dp" />
 
-    </LinearLayout>
-</ScrollView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_categories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:minHeight="80dp"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                tools:listitem="@layout/item_category" />
+
+            <!-- Popular Products Section -->
+            <include
+                layout="@layout/layout_section_list"
+                android:id="@+id/section_top_books"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
