@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="@android:color/white">
+
+    <ImageView
+        android:id="@+id/img_detail_product"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:scaleType="centerCrop"
+        android:background="#F0F0F0"
+        android:contentDescription="Product Image" />
+
+    <TextView
+        android:id="@+id/tv_detail_product_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tên sản phẩm"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#222"
+        android:layout_marginTop="12dp" />
+
+    <TextView
+        android:id="@+id/tv_detail_product_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="0 VNĐ"
+        android:textSize="16sp"
+        android:textColor="#E91E63"
+        android:textStyle="bold"
+        android:layout_marginTop="4dp" />
+
+    <TextView
+        android:id="@+id/tv_detail_product_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Còn hàng"
+        android:textSize="13sp"
+        android:textColor="#4CAF50"
+        android:layout_marginTop="2dp" />
+
+    <TextView
+        android:id="@+id/tv_detail_product_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mô tả sản phẩm"
+        android:textSize="14sp"
+        android:textColor="#444"
+        android:layout_marginTop="12dp"
+        android:maxLines="6"
+        android:ellipsize="end" />
+
+    <Button
+        android:id="@+id/btn_close_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Đóng"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#E0E0E0"
+        android:textColor="#222" />
+
+</LinearLayout> 
