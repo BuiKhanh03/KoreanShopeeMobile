@@ -1,80 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#F5F5F5">
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    tools:context=".Fragment.HomeFragment">
 
-    <!-- Sticky Search Bar -->
-    <include layout="@layout/top_navbar" />
-
-    <!-- Scrollable Content -->
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/home_container"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:fillViewport="true"
-        android:scrollbars="none"
-        android:paddingBottom="16dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/top_navbar" />
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="16dp">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true"
+            android:paddingBottom="16dp"
+            android:scrollbars="none">
 
-            <ImageView
-                android:id="@+id/banner_image"
-                android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginHorizontal="8dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/bannner1"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:id="@+id/text_greeting"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Chào mừng trở lại"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:padding="16dp"
-                android:textColor="#000000" />
+                android:orientation="vertical"
+                android:padding="16dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Danh mục"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="#000000"
-                android:padding="16dp"
-                android:layout_marginTop="8dp" />
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/banner_view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:layout_marginBottom="16dp"
+                    android:clipToPadding="false"
+                    android:paddingHorizontal="8dp">
+                </androidx.viewpager2.widget.ViewPager2>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_categories"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:minHeight="80dp"
-                android:overScrollMode="never"
-                android:scrollbars="none"
-                tools:listitem="@layout/item_category" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginBottom="10dp">
 
-            <!-- Popular Products Section -->
-            <include
-                layout="@layout/layout_section_list"
-                android:id="@+id/section_top_books"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp" />
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
 
+                            <View
+                                android:layout_width="5dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/pink800"
+                                android:layout_marginEnd="8dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Danh mục"
+                                android:textColor="@color/blue300"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recycler_categories"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="80dp"
+                            android:overScrollMode="never"
+                            android:scrollbars="none"
+                            tools:listitem="@layout/item_category" />
+                    </LinearLayout>
+
+                <include
+                    android:id="@+id/section_top_books"
+                    layout="@layout/layout_section_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp" />
+
+            </LinearLayout>
         </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

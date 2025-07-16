@@ -1,231 +1,326 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/frame_root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- Toolbar/AppBar -->
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_product_detail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/pink800"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:minHeight="48dp" />
-
-        <!-- Ảnh sản phẩm lớn -->
-        <ImageView
-            android:id="@+id/img_detail_product"
-            android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:scaleType="centerCrop"
-            android:background="#F0F0F0"
-            android:contentDescription="Product Image"
-            android:layout_marginBottom="8dp" />
-
-        <!-- (Slider ảnh nhỏ nếu có) -->
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:id="@+id/slider_images_container">
-            <LinearLayout
-                android:id="@+id/slider_images"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" />
-        </HorizontalScrollView>
-
-        <!-- Tên, giá, trạng thái -->
-        <TextView
-            android:id="@+id/tv_detail_product_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tên sản phẩm"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="#222"
-            android:paddingHorizontal="16dp"
-            android:layout_marginTop="8dp" />
-
-        <TextView
-            android:id="@+id/tv_detail_product_price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="0 VNĐ"
-            android:textSize="18sp"
-            android:textColor="#E91E63"
-            android:textStyle="bold"
-            android:paddingHorizontal="16dp"
-            android:layout_marginTop="4dp" />
-
-        <TextView
-            android:id="@+id/tv_detail_product_status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Còn hàng"
-            android:textSize="14sp"
-            android:textColor="#4CAF50"
-            android:paddingHorizontal="16dp"
-            android:layout_marginTop="2dp" />
-
-        <!-- Thông tin phụ: Thương hiệu, Danh mục, Người bán -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="12dp"
-            android:paddingHorizontal="16dp"
-            android:layout_marginBottom="0dp">
-
-            <TextView
-                android:id="@+id/tvBrand"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="Thương hiệu: Panasonic"
-                android:textColor="#666"
-                android:textSize="14sp"
-                android:ellipsize="end"
-                android:maxLines="1" />
-
-            <TextView
-                android:id="@+id/tvCategory"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="Danh mục: Gia dụng"
-
-                android:textColor="#666"
-                android:textSize="14sp"
-                android:ellipsize="end"
-                android:maxLines="1" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvSeller"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Người bán: ShopABC"
-            android:textColor="#666"
-            android:textSize="14sp"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="0dp"
-            android:ellipsize="end"
-            android:paddingHorizontal="16dp"
-            android:maxLines="1" />
-
-        <!-- Mô tả sản phẩm -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Mô tả sản phẩm"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:textColor="#222"
-            android:paddingHorizontal="16dp"
-            android:layout_marginTop="18dp" />
-        <TextView
-            android:id="@+id/tv_detail_product_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="15sp"
-            android:textColor="#222"
-            android:paddingHorizontal="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="24dp" />
-
-        <!-- Kích cỡ sản phẩm -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Kích cỡ:"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:textColor="#222"
-            android:paddingHorizontal="16dp"
-            android:layout_marginTop="8dp" />
-        <LinearLayout
-            android:id="@+id/layoutProductSizes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingHorizontal="16dp"
-            android:layout_marginTop="4dp" />
-
-        <!-- Đánh giá sản phẩm -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Đánh giá:"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:textColor="#222"
-            android:paddingHorizontal="16dp"
-            android:layout_marginTop="16dp" />
-        <LinearLayout
-            android:id="@+id/layoutProductReviews"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:background="@color/blue800"
             android:orientation="vertical"
-            android:paddingHorizontal="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="16dp" />
+            android:paddingTop="30dp">
 
-        <!-- Nút chức năng -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="12dp">
-
-            <Button
-                android:id="@+id/btnAddToCart"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="48dp"
-                android:text="Thêm vào giỏ hàng"
-                android:textAllCaps="false"
-                android:textSize="16sp"
-                android:textColor="#FF5722"
-                android:backgroundTint="#FFF3E0"
-                android:background="@drawable/rounded_edittext"
-                android:layout_marginEnd="8dp" />
-
-            <Button
-                android:id="@+id/btnBuyNow"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="48dp"
-                android:text="Mua ngay"
-                android:textAllCaps="false"
-                android:textSize="16sp"
-                android:textColor="#FFF"
-                android:backgroundTint="#FF5722"
-                android:background="@drawable/rounded_edittext"
-                android:layout_marginStart="8dp" />
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_product_detail"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/blue800"
+                android:elevation="4dp"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btnReviewProduct"
+        <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:text="Đánh giá sản phẩm"
-            android:textAllCaps="false"
-            android:textSize="16sp"
-            android:textColor="#FFF"
-            android:backgroundTint="#FF9800"
-            android:background="@drawable/rounded_edittext"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp" />
+            android:layout_height="match_parent"
+            android:background="@color/white">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <ImageView
+                    android:id="@+id/img_detail_product"
+                    android:layout_width="match_parent"
+                    android:layout_height="500dp"
+                    android:scaleType="centerCrop" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="12dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tv_discount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:text="-21%"
+                                android:textColor="#E53935"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/tv_price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:text="62.250đ"
+                                android:textColor="#E53935"
+                                android:textSize="24sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_detail_product_price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="5dp"
+                                android:layout_marginTop="4dp"
+                                android:text="79.000đ"
+                                android:textColor="#9E9E9E"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/tv_rating"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="25dp"
+                                android:layout_marginTop="12dp"
+                                android:text="⭐ 5.0 (2.5k lượt)"
+                                android:textColor="#FF9800"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_detail_product_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:ellipsize="end"
+                        android:lineSpacingExtra="4dp"
+                        android:maxLines="2"
+                        android:text="Sách - Nhà Giả Kim (Tái Bản 2020) - Shenghai"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_detail_product_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/bg_instock"
+                        android:padding="6dp"
+                        android:text="Còn hàng"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="8dp"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="4dp"
+                        app:strokeColor="@color/blue300"
+                        app:strokeWidth="1dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="12dp">
+
+                            <TextView
+                                android:id="@+id/tv_deliveryDate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawableStart="@android:drawable/ic_menu_directions"
+                                android:drawablePadding="8dp"
+                                android:text="Nhận hàng 8 Th07 - 9 Th07"
+                                android:textColor="#333"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/tv_returnPolicy"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:drawableStart="@android:drawable/ic_menu_info_details"
+                                android:drawablePadding="8dp"
+                                android:text="Trả hàng miễn phí 15 ngày · Chính hãng 100%"
+                                android:textColor="#333"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingRight="20dp">
+
+                        <ImageView
+                            android:id="@+id/profilePicture"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginEnd="12dp"
+                            android:background="@drawable/circle_background"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_user" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvSeller"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Ta Hai Yen"
+                                android:textColor="@color/blue300"
+                                android:layout_weight="1"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <Button
+                                android:id="@+id/btnViewShop"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:backgroundTint="@color/blue300"
+                                android:padding="6dp"
+                                android:text="Xem cửa hàng"
+                                android:textColor="@android:color/white"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/blue300" />
+
+                    <TextView
+                        android:id="@+id/tvBrand"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="Thương hiệu: Panasonic"
+                        android:textColor="#333"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tvCategory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="Danh mục: Sách"
+                        android:textColor="#333"
+                        android:textSize="16sp" />
+
+                    <LinearLayout
+                        android:id="@+id/layoutProductSizes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal" />
+
+                    <TextView
+                        android:id="@+id/tv_detail_product_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="Mô tả nội dung sách ở đây..."
+                        android:textColor="#333"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_ratting_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="Đánh giá sản phẩm"
+                        android:textColor="#333"
+                        android:textSize="16sp" />
+
+                    <LinearLayout
+                        android:id="@+id/layoutProductReviews"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="vertical"
+                        android:padding="8dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/bottomBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="8dp">
+
+                    <ImageView
+                        android:id="@+id/btn_chat"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="5dp"
+                        android:contentDescription="Chat"
+                        android:src="@drawable/ic_mess"
+                        app:tint="@color/pink800"/>
+
+                    <Button
+                        android:id="@+id/btnAddToCart"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="2"
+                        android:backgroundTint="@color/blue800"
+                        android:text="Thêm vào giỏ"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/btnBuyNow"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1.5"
+                        android:backgroundTint="@color/blue800"
+                        android:text="Mua ngay"
+                        android:textSize="18sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </ScrollView>
     </LinearLayout>
-</ScrollView> 
+
+    <FrameLayout
+        android:id="@+id/cart_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+</FrameLayout>

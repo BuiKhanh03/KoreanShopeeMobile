@@ -33,13 +33,10 @@
 <!--            android:name=".PaymentHistory"-->
 <!--            android:exported="false" />-->
         <activity
-            android:name=".OrderHistory.OrderHistory"
-            android:exported="false" />
-        <activity
             android:name=".ProfileCustomer"
             android:exported="false" />
         <activity
-            android:name=".layout_sceen"
+            android:name=".LayoutScreen"
             android:exported="true">
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -88,10 +85,11 @@
         <activity android:name=".ui.main.OrderHistoryActivity" android:exported="false" />
         <activity android:name=".ui.main.OrderDetailActivity" android:exported="false" />
         <activity android:name=".ui.main.PaymentResultActivity" android:exported="false" />
-        <activity android:name=".ui.main.ProductByCategoryActivity" android:exported="false" />
         <activity android:name=".ui.seller.SellerActivity" android:exported="false" />
         <activity android:name=".ui.seller.AddProductActivity" android:exported="false" />
         <activity android:name=".ui.seller.EditProductActivity" android:exported="false" />
+        <activity android:name=".ui.main.ChatActivity" android:exported="false"/>
+        <activity android:name=".ui.main.ChatDetailActivity" android:exported="false"/>
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

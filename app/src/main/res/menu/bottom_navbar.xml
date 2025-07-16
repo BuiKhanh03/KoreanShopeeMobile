@@ -16,13 +16,13 @@
         android:title="Thông báo" />
 
     <item
-        android:id="@+id/nav_setting"
+        android:id="@+id/nav_cart"
         android:icon="@drawable/ic_cart"
         android:title="Giỏ hàng" />
 
     <item
-        android:id="@+id/nav_account"
-        android:icon="@drawable/ic_account"
-        android:title="Tôi" />
+        android:id="@+id/nav_settings"
+        android:icon="@drawable/ic_settings"
+        android:title="Cài đặt" />
 
 </menu>

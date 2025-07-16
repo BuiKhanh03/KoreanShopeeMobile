@@ -1,93 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="8dp"
-    android:background="#FFFFFF"
-    android:elevation="2dp">
-
-    <ImageView
-        android:id="@+id/imageProduct"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_launcher_foreground" />
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp"
+    android:elevation="4dp">
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_weight="1"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp">
-
-        <TextView
-            android:id="@+id/textProductName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tên sản phẩm"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:maxLines="2"
-            android:ellipsize="end" />
-
-        <TextView
-            android:id="@+id/textProductPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="100.000đ"
-            android:textSize="14sp"
-            android:textColor="#FF5722"
-            android:layout_marginTop="4dp" />
+        android:padding="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/decrease"
-                android:layout_width="60dp"
-                android:layout_height="40dp"
-                android:backgroundTint="#FFF3E0"
-                android:elevation="2dp"
-                android:text="-"
-                android:textColor="#FF9800"
-                android:textSize="18sp" />
+            <ImageView
+                android:id="@+id/btn_choose"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="top"
+                android:layout_marginEnd="5dp"
+                android:contentDescription="Chọn sách"
+                android:src="@drawable/ic_tick" />
 
             <TextView
-                android:id="@+id/textQuantity"
-                android:layout_width="wrap_content"
+                android:id="@+id/textProductName"
+                android:layout_width="298dp"
                 android:layout_height="wrap_content"
-                android:text="Số lượng: 1"
-                android:textSize="14sp"
-                android:layout_marginTop="4dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp" />
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="제철 행복"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/increase"
-                android:layout_width="60dp"
-                android:layout_height="40dp"
-                android:text="+"
-                android:textSize="18sp"
-                android:textColor="#FF9800"
-                android:backgroundTint="#FFF3E0"
-                android:elevation="2dp" />
+            <ImageView
+                android:id="@+id/buttonRemove"
+                android:layout_width="21dp"
+                android:layout_height="24dp"
+                android:layout_gravity="top"
+                android:layout_marginStart="5dp"
+                android:contentDescription="Xóa sách khỏi giỏ"
+                android:src="@android:drawable/ic_delete"
+                app:tint="@color/blue800" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageProduct"
+                android:layout_width="70dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_launcher_background" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingStart="15dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_cart_discounted_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="6dp"
+                        android:text="32,040"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textProductPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="35,600"
+                        android:textColor="#9E9E9E"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/quantity_box_background"
+                    android:orientation="horizontal"
+                    android:padding="4dp">
+
+                    <TextView
+                        android:id="@+id/decrease"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/qty_btn_border"
+                        android:gravity="center"
+                        android:text="-"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/textQuantity"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:gravity="center"
+                        android:text="1"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/increase"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/qty_btn_border"
+                        android:gravity="center"
+                        android:text="+"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_cart_delivery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="Giao hàng ngày 14/07"
+                    android:textColor="#666666"
+                    android:textSize="13sp" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
-    <ImageButton
-        android:id="@+id/buttonRemove"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Xóa sản phẩm"
-        android:src="@android:drawable/ic_delete"
-        app:tint="#FF0000" />
-
-</LinearLayout>
+</androidx.cardview.widget.CardView>

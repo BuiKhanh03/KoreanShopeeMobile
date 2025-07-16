@@ -13,7 +13,7 @@ public class ApiClient {
     // Sử dụng IP máy tính để mobile có thể kết nối được
     // 10.0.2.2 = Android Emulator
     // 192.168.1.4 = IP máy tính thật (từ ipconfig)
-    private static final String BASE_URL = "http://192.168.1.4:32768/";
+    private static final String BASE_URL = "http://192.168.20.1:32770/";
     private static Retrofit retrofit = null;
     private static Retrofit authenticatedRetrofit = null;
     

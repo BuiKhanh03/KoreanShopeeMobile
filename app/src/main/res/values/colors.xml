@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="blue800">#22428C</color>
+    <color name="blue800">#173780</color>
     <color name="blue600">#3A5A9C</color>
-    <color name="blue300">#4A64A1</color>
-    <color name="pink800">#d090a0</color>
-    <color name="pink300">#e3c4d2</color>
+    <color name="blue500">#2C59B6</color>
+    <color name="blue300">#3761C5</color>
+    <color name="pink800">#D9869A</color>
+    <color name="pink300">#E0A5C0</color>
+    <color name="pink500">#EC407A</color>
+    <color name="colorPrimary">#EC407A</color>
+    <color name="colorPrimaryDark">#C2185B</color>
+    <color name="colorAccent">#FF4081</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="gray500">#888888</color>
     <color name="gray800">#3A3A44</color>
     <color name="red500">#FF0000</color>
     <color name="orange500">#FF5200</color>
-    <color name="pink900">#BF0200</color>
+    <color name="pink900">#FF0081</color>
     <color name="skin500">#D3B8B8</color>
-    <color name="pink500">#EC407A</color>
-    <color name="colorPrimary">#EC407A</color>
-    <color name="colorPrimaryDark">#C2185B</color>
-    <color name="colorAccent">#FF4081</color>
 </resources>

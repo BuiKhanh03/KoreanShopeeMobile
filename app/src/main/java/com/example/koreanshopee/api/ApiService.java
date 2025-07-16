@@ -1,5 +1,7 @@
 package com.example.koreanshopee.api;
 
+import com.example.koreanshopee.model.Category;
+import com.example.koreanshopee.model.CategoryResponse;
 import com.example.koreanshopee.model.LoginRequest;
 import com.example.koreanshopee.model.LoginResponse;
 import com.example.koreanshopee.model.RegisterRequest;
@@ -28,6 +30,10 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 
 public interface ApiService {
+
+    @GET("/api/category/{id}")
+    Call<CategoryResponse> getCategoryById(@Path("id") String id);
+
     @POST("api/authentication/login")
     Call<LoginResponse> login(@Body LoginRequest loginRequest);
     

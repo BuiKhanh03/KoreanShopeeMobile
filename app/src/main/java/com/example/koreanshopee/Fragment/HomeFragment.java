@@ -1,6 +1,9 @@
 package com.example.koreanshopee.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +17,7 @@ import android.widget.GridLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.GridLayoutManager;
 
-import com.example.koreanshopee.Item;
-import com.example.koreanshopee.ItemAdapter;
 import com.example.koreanshopee.R;
 import com.example.koreanshopee.api.ApiClient;
 import com.example.koreanshopee.api.ApiService;
@@ -25,22 +25,25 @@ import com.example.koreanshopee.model.Category;
 import com.example.koreanshopee.model.CategoryListResponse;
 import com.example.koreanshopee.model.Product;
 import com.example.koreanshopee.model.ProductListResponse;
+import com.example.koreanshopee.ui.main.BannerAdapter;
+import com.example.koreanshopee.ui.main.ChatActivity;
+import com.example.koreanshopee.ui.main.ProductByCategoryFragment;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.viewpager2.widget.ViewPager2;
+
 import android.util.Log;
 
 public class HomeFragment extends Fragment {
-    public HomeFragment() {}
     private ApiService apiService;
-    private TextView textGreeting;
     private RecyclerView recyclerCategories;
     private CategoryAdapter categoryAdapter;
     private List<Category> categoryList = new ArrayList<>();
@@ -49,43 +52,36 @@ public class HomeFragment extends Fragment {
     private int pageSize = 4; // Số sản phẩm mỗi trang (2 cột x 2 dòng)
     private EditText searchBar;
     private GridLayout gridProducts;
+    private ViewPager2 bannerViewPager;
+    private Handler bannerHandler;
+    private Runnable bannerRunnable;
+    private int currentBannerIndex = 0;
+    private View btnPrev, btnNext, sectionBooks;
+    private TextView tvBookTitle;
+    private ImageView iconChat;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        ImageView iconChat = view.findViewById(R.id.icon_chat);
+        iconChat = view.findViewById(R.id.icon_chat);
+        sectionBooks = view.findViewById(R.id.section_top_books);
+        tvBookTitle = sectionBooks.findViewById(R.id.tvSectionTitle);
+        gridProducts = sectionBooks.findViewById(R.id.grid_products);
+        btnPrev = sectionBooks.findViewById(R.id.btnPrevPage);
+        btnNext = sectionBooks.findViewById(R.id.btnNextPage);
+        searchBar = view.findViewById(R.id.search_bar);
+        recyclerCategories = view.findViewById(R.id.recycler_categories);
+        bannerViewPager = view.findViewById(R.id.banner_view_pager);
+
         iconChat.setOnClickListener(v -> {
-            Fragment chatFragment = new ChatFragment();
-            getParentFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, chatFragment)
-                    .addToBackStack(null)
-                    .commit();
+            Intent intent = new Intent(getContext(), ChatActivity.class);
+            startActivity(intent);
         });
 
-        textGreeting = view.findViewById(R.id.text_greeting);
-        int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
 
-        String greeting;
-        if (hour < 12) {
-            greeting = "Chào buổi sáng!";
-        } else if (hour < 18) {
-            greeting = "Chào buổi chiều!";
-        } else {
-            greeting = "Chào buổi tối!";
-        }
-
-        textGreeting.setText(greeting);
-
-        View sectionBooks = view.findViewById(R.id.section_top_books);
-        TextView tvBookTitle = sectionBooks.findViewById(R.id.tvSectionTitle);
         tvBookTitle.setText("Phổ biến");
 
-        gridProducts = sectionBooks.findViewById(R.id.grid_products);
-
-        View btnPrev = sectionBooks.findViewById(R.id.btnPrevPage);
-        View btnNext = sectionBooks.findViewById(R.id.btnNextPage);
         if (btnPrev != null && btnNext != null) {
             btnPrev.setOnClickListener(v -> {
                 if (currentPage > 1) {
@@ -109,20 +105,19 @@ public class HomeFragment extends Fragment {
             });
         }
 
-        recyclerCategories = view.findViewById(R.id.recycler_categories);
-        categoryAdapter = new CategoryAdapter(categoryList);
+        categoryAdapter = new CategoryAdapter(categoryList, this); // 👈 truyền Fragment hiện tại
         recyclerCategories.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         recyclerCategories.setAdapter(categoryAdapter);
         fetchCategories();
         fetchProducts();
 
-        searchBar = view.findViewById(R.id.search_bar);
         searchBar.addTextChangedListener(new TextWatcher() {
             private android.os.Handler handler = new android.os.Handler();
             private Runnable searchRunnable;
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -130,15 +125,36 @@ public class HomeFragment extends Fragment {
                 if (searchRunnable != null) {
                     handler.removeCallbacks(searchRunnable);
                 }
-                
+
                 // Create new search request with 500ms delay
                 searchRunnable = () -> filterProducts(s.toString());
                 handler.postDelayed(searchRunnable, 500);
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
+
+        List<Integer> banners = Arrays.asList(
+                R.drawable.banner1,
+                R.drawable.banner2,
+                R.drawable.banner3
+        );
+
+        BannerAdapter adapter = new BannerAdapter(banners);
+        bannerViewPager.setAdapter(adapter);
+
+        bannerHandler = new Handler(Looper.getMainLooper());
+        bannerRunnable = new Runnable() {
+            @Override
+            public void run() {
+                currentBannerIndex = (currentBannerIndex + 1) % banners.size();
+                bannerViewPager.setCurrentItem(currentBannerIndex, true);
+                bannerHandler.postDelayed(this, 3000);
+            }
+        };
+        bannerHandler.postDelayed(bannerRunnable, 3000);
 
         return view;
     }
@@ -160,6 +176,7 @@ public class HomeFragment extends Fragment {
                     Log.e("CategoryAPI", "Response not successful: code=" + response.code());
                 }
             }
+
             @Override
             public void onFailure(@NonNull Call<CategoryListResponse> call, @NonNull Throwable t) {
                 Log.e("CategoryAPI", "onFailure: ", t);
@@ -184,6 +201,7 @@ public class HomeFragment extends Fragment {
                     Log.e("ProductAPI", "Response not successful: code=" + response.code());
                 }
             }
+
             @Override
             public void onFailure(@NonNull Call<ProductListResponse> call, @NonNull Throwable t) {
                 Log.e("ProductAPI", "onFailure: ", t);
@@ -194,10 +212,10 @@ public class HomeFragment extends Fragment {
     private void updateTopBooks() {
         if (getView() == null) return;
         Log.d("ProductAPI", "updateTopBooks: productList.size=" + productList.size());
-        
+
         // Clear existing views
         gridProducts.removeAllViews();
-        
+
         // Add product views to grid
         for (int i = 0; i < Math.min(productList.size(), 4); i++) {
             Product product = productList.get(i);
@@ -208,12 +226,12 @@ public class HomeFragment extends Fragment {
 
     private View createProductView(Product product) {
         View productView = LayoutInflater.from(getContext()).inflate(R.layout.item_product_grid, gridProducts, false);
-        
+
         ImageView imgProduct = productView.findViewById(R.id.img_product);
         TextView tvProductName = productView.findViewById(R.id.tv_product_name);
         TextView tvProductPrice = productView.findViewById(R.id.tv_product_price);
         TextView tvProductStatus = productView.findViewById(R.id.tv_product_status);
-        
+
         tvProductName.setText(product.getName());
         tvProductPrice.setText(product.getPrice() + " VNĐ");
         tvProductStatus.setText(product.getStatus());
@@ -223,7 +241,7 @@ public class HomeFragment extends Fragment {
             intent.putExtra("product_id", product.getId());
             getContext().startActivity(intent);
         });
-        
+
         return productView;
     }
 
@@ -256,6 +274,7 @@ public class HomeFragment extends Fragment {
                     Log.e("ProductSearchAPI", "Response not successful: code=" + response.code());
                 }
             }
+
             @Override
             public void onFailure(@NonNull Call<ProductListResponse> call, @NonNull Throwable t) {
                 Log.e("ProductSearchAPI", "onFailure: ", t);
@@ -265,42 +284,61 @@ public class HomeFragment extends Fragment {
 
     private static class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
         private final List<Category> categories;
-        public CategoryAdapter(List<Category> categories) {
+        private final Fragment parentFragment;
+
+        public CategoryAdapter(List<Category> categories, Fragment parentFragment) {
             this.categories = categories;
+            this.parentFragment = parentFragment; // 🔥 GÁN GIÁ TRỊ
         }
+
         @NonNull
         @Override
         public CategoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category, parent, false);
             return new CategoryViewHolder(view);
         }
+
         @Override
         public void onBindViewHolder(@NonNull CategoryViewHolder holder, int position) {
             Category category = categories.get(position);
             holder.tvCategoryName.setText(category.getName());
-            
+
             // Set màu nền khác nhau cho từng category
             int[] colors = {
-                0xFFE3F2FD, // Light Blue
-                0xFFF3E5F5, // Light Purple
-                0xFFE8F5E8, // Light Green
-                0xFFFFF3E0, // Light Orange
-                0xFFFCE4EC, // Light Pink
-                0xFFF1F8E9, // Light Lime
-                0xFFE0F2F1, // Light Teal
-                0xFFFFF8E1  // Light Yellow
+                    0xFFE3F2FD, // Light Blue
+                    0xFFF3E5F5, // Light Purple
+                    0xFFE8F5E8, // Light Green
+                    0xFFFFF3E0, // Light Orange
+                    0xFFFCE4EC, // Light Pink
+                    0xFFF1F8E9, // Light Lime
+                    0xFFE0F2F1, // Light Teal
+                    0xFFFFF8E1  // Light Yellow
             };
-            
+
             int colorIndex = position % colors.length;
             holder.ivCategoryIcon.setBackgroundTintList(android.content.res.ColorStateList.valueOf(colors[colorIndex]));
+            holder.itemView.setOnClickListener(v -> {
+                ProductByCategoryFragment fragment = ProductByCategoryFragment.newInstance(category.getId());
+
+                parentFragment.requireActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, fragment)
+                        .addToBackStack(null)
+                        .commit();
+            });
+
         }
+
         @Override
         public int getItemCount() {
             return categories.size();
         }
+
         static class CategoryViewHolder extends RecyclerView.ViewHolder {
             ImageView ivCategoryIcon;
             TextView tvCategoryName;
+
             public CategoryViewHolder(@NonNull View itemView) {
                 super(itemView);
                 ivCategoryIcon = itemView.findViewById(R.id.iv_category_icon);

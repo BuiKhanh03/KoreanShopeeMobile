@@ -2,106 +2,102 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="250dp"
     android:layout_margin="8dp"
     card_view:cardCornerRadius="12dp"
     card_view:cardElevation="4dp"
     android:background="#FFFFFF">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:padding="8dp">
 
+        <!-- Image -->
         <ImageView
             android:id="@+id/imgBook"
             android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:scaleType="centerCrop"
-            android:background="@drawable/bg_pink" />
+            android:layout_height="200dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_pink"
+            android:contentDescription="Ảnh sách"
+            android:scaleType="centerCrop" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="start"
-            android:layout_marginTop="4dp">
-            <TextView
-                android:id="@+id/labelFavorite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Yêu thích"
-                android:textColor="#fff"
-                android:background="#FF5722"
-                android:paddingLeft="6dp"
-                android:paddingRight="6dp"
-                android:paddingTop="2dp"
-                android:paddingBottom="2dp"
-                android:textSize="10sp"
-                android:layout_marginEnd="4dp"/>
-        </LinearLayout>
-
+        <!-- Tên sản phẩm -->
         <TextView
             android:id="@+id/tvBookTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tên sản phẩm"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:maxLines="2"
+            android:layout_marginTop="6dp"
             android:ellipsize="end"
-            android:layout_marginTop="4dp"
-            android:textColor="#000000" />
+            android:maxLines="2"
+            android:text="Tên sản phẩm"
+            android:textColor="#000000"
+            android:textSize="13sp"
+            android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tvPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="58.800đ"
-            android:textColor="#FF5722"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:layout_marginTop="2dp" />
-
-        <TextView
-            android:id="@+id/tvSold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Đã bán 50k+"
-            android:textColor="#888"
-            android:textSize="12sp"
-            android:layout_marginTop="2dp" />
-
+        <!-- Giá & Đã bán -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="2dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btnAddToCart"
+            <TextView
+                android:id="@+id/tvPrice"
                 android:layout_width="0dp"
-                android:layout_height="36dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Thêm giỏ"
-                android:textSize="12sp"
-                android:background="@drawable/bg_pink"
-                android:textColor="#FFFFFF"
-                android:layout_marginEnd="4dp" />
+                android:gravity="start"
+                android:text="58.800đ"
+                android:textColor="#FF5722"
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/btnReview"
+            <TextView
+                android:id="@+id/tvSold"
                 android:layout_width="0dp"
-                android:layout_height="36dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Đánh giá"
-                android:textSize="12sp"
-                android:background="@drawable/bg_pink"
-                android:textColor="#FFFFFF"
-                android:layout_marginStart="4dp" />
-
+                android:gravity="end"
+                android:text="Đã bán 50k+"
+                android:textColor="#888888"
+                android:textSize="11sp" />
         </LinearLayout>
 
+        <!-- Nút hành động -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/btnAddToCart"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_button"
+                android:contentDescription="Thêm giỏ"
+                android:padding="6dp"
+                android:src="@drawable/ic_cart" />
+
+            <Space
+                android:layout_width="8dp"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/btnReview"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_button"
+                android:contentDescription="Đánh giá"
+                android:padding="6dp"
+                android:src="@drawable/ic_rate_star" />
+        </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

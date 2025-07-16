@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,7 +22,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import com.example.koreanshopee.ui.main.ProductByCategoryActivity;
+import com.example.koreanshopee.ui.main.ProductByCategoryFragment;
 
 public class ShopsFragment extends Fragment {
     private RecyclerView recyclerCategories;
@@ -34,7 +35,7 @@ public class ShopsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_shops, container, false);
         recyclerCategories = view.findViewById(R.id.recycler_categories);
-        categoryAdapter = new CategoryAdapter(categoryList);
+        categoryAdapter = new CategoryAdapter(categoryList, this);
         recyclerCategories.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerCategories.setAdapter(categoryAdapter);
         fetchCategories();
@@ -61,34 +62,49 @@ public class ShopsFragment extends Fragment {
 
     private static class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
         private final List<Category> categories;
-        public CategoryAdapter(List<Category> categories) {
+        private final Fragment parentFragment;
+
+        public CategoryAdapter(List<Category> categories, Fragment parentFragment) {
             this.categories = categories;
+            this.parentFragment = parentFragment;
         }
+
         @Override
         public CategoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category, parent, false);
             return new CategoryViewHolder(view);
         }
+
         @Override
         public void onBindViewHolder(CategoryViewHolder holder, int position) {
             Category category = categories.get(position);
             holder.tvCategoryName.setText(category.getName());
+
             holder.itemView.setOnClickListener(v -> {
-                Intent intent = new Intent(holder.itemView.getContext(), ProductByCategoryActivity.class);
-                intent.putExtra("categoryId", category.getId());
-                holder.itemView.getContext().startActivity(intent);
+                ProductByCategoryFragment fragment = ProductByCategoryFragment.newInstance(category.getId());
+
+                parentFragment.requireActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, fragment)
+                        .addToBackStack(null)
+                        .commit();
             });
         }
+
         @Override
         public int getItemCount() {
             return categories.size();
         }
+
         static class CategoryViewHolder extends RecyclerView.ViewHolder {
             TextView tvCategoryName;
+
             public CategoryViewHolder(View itemView) {
                 super(itemView);
                 tvCategoryName = itemView.findViewById(R.id.tv_category_name);
             }
         }
     }
+
 }

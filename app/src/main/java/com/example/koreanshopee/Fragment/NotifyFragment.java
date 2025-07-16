@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.koreanshopee.Notification.NotificationAdapter;
-import com.example.koreanshopee.Notification.ItemNotification;
+import com.example.koreanshopee.ui.main.NotificationAdapter;
+import com.example.koreanshopee.ui.main.ItemNotification;
 import com.example.koreanshopee.R;
 
 import java.util.ArrayList;

@@ -3,22 +3,31 @@ package com.example.koreanshopee;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
 import com.example.koreanshopee.api.ApiClient;
 import com.example.koreanshopee.api.ApiService;
+import com.example.koreanshopee.model.CartManager;
 import com.example.koreanshopee.model.Product;
 import com.example.koreanshopee.model.ProductDetailResponse;
 import com.example.koreanshopee.ui.main.CartActivity;
+import com.example.koreanshopee.ui.main.ChatActivity;
 import com.example.koreanshopee.utils.TokenManager;
-import com.google.gson.Gson;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,16 +45,18 @@ public class ProductDetailActivity extends AppCompatActivity {
     private TokenManager tokenManager;
     private Product currentProduct;
     private Product.Review myReview = null;
-    
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
 
         tokenManager = new TokenManager(this);
-        
+
         Toolbar toolbar = findViewById(R.id.toolbar_product_detail);
+        setSupportActionBar(toolbar);
         toolbar.setTitle("Chi tiết sản phẩm");
+        toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setNavigationIcon(R.drawable.ic_back);
         toolbar.setNavigationOnClickListener(v -> finish());
 
@@ -59,7 +70,8 @@ public class ProductDetailActivity extends AppCompatActivity {
         TextView tvSeller = findViewById(R.id.tvSeller);
         Button btnAddToCart = findViewById(R.id.btnAddToCart);
         Button btnBuyNow = findViewById(R.id.btnBuyNow);
-        Button btnReviewProduct = findViewById(R.id.btnReviewProduct);
+        ImageView iconChat = findViewById(R.id.btn_chat);
+//        Button btnReviewProduct = findViewById(R.id.btnReviewProduct);
 
         LinearLayout layoutProductSizes = findViewById(R.id.layoutProductSizes);
         LinearLayout layoutProductReviews = findViewById(R.id.layoutProductReviews);
@@ -69,6 +81,11 @@ public class ProductDetailActivity extends AppCompatActivity {
             finish();
             return;
         }
+
+        iconChat.setOnClickListener(v -> {
+            Intent intent = new Intent(ProductDetailActivity.this, ChatActivity.class);
+            startActivity(intent);
+        });
 
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
         apiService.getProductDetail(this.productId).enqueue(new Callback<ProductDetailResponse>() {
@@ -80,18 +97,28 @@ public class ProductDetailActivity extends AppCompatActivity {
                     // Hiển thị tên
                     tvName.setText(currentProduct.getName() != null ? currentProduct.getName() : "Không rõ tên");
                     // Hiển thị giá
-                    tvPrice.setText(currentProduct.getPrice() + " VNĐ");
+                    tvPrice.setText(currentProduct.getPrice() + " ₫");
                     // Hiển thị trạng thái
                     String status = currentProduct.getStatus();
-                    if (status == null || status.isEmpty()) status = "Không rõ trạng thái";
-                    else if (status.equalsIgnoreCase("Inactive") || currentProduct.getStockQuantity() == 0) status = "Hết hàng";
-                    tvStatus.setText(status);
+                    int stockQuantity = currentProduct.getStockQuantity();
+
+                    if (status == null || status.isEmpty()) {
+                        tvStatus.setText("Không rõ trạng thái");
+                        tvStatus.setBackgroundResource(R.drawable.bg_outofstock); // hoặc tạo file `bg_unknown.xml` nếu muốn
+                    } else if (status.equalsIgnoreCase("Inactive") || stockQuantity == 0) {
+                        tvStatus.setText("Hết hàng");
+                        tvStatus.setBackgroundResource(R.drawable.bg_outofstock);
+                    } else {
+                        tvStatus.setText("Còn hàng");
+                        tvStatus.setBackgroundResource(R.drawable.bg_instock);
+                    }
+
                     // Hiển thị mô tả
                     String desc = currentProduct.getDescription();
-                    tvDescription.setText(desc != null && !desc.isEmpty() ? desc : "Không có mô tả");
+                    tvDescription.setText("Thông tin mô tả: " + (desc != null && !desc.isEmpty() ? desc : "Không có mô tả"));
                     // Hiển thị brand, seller, category với kiểm tra rỗng
                     tvBrand.setText("Thương hiệu: " + (currentProduct.getBrand() != null && !currentProduct.getBrand().isEmpty() ? currentProduct.getBrand() : "Không rõ"));
-                    tvSeller.setText("Shop: " + (currentProduct.getSellerName() != null && !currentProduct.getSellerName().isEmpty() ? currentProduct.getSellerName() : "Không rõ"));
+                    tvSeller.setText(currentProduct.getSellerName() != null && !currentProduct.getSellerName().isEmpty() ? currentProduct.getSellerName() : "Không rõ");
                     // Gọi API lấy danh sách category và map sang tên
                     apiService.getCategories().enqueue(new Callback<CategoryListResponse>() {
                         @Override
@@ -119,11 +146,18 @@ public class ProductDetailActivity extends AppCompatActivity {
                         // TODO: Load ảnh từ URL nếu có, ví dụ dùng Glide/Picasso
                         // Glide.with(ProductDetailActivity.this).load(currentProduct.getProductImages().get(0)).into(imgProduct);
                     } else {
-                        imgProduct.setImageResource(R.drawable.bg1); // Ảnh mặc định
+                        imgProduct.setImageResource(R.drawable.bg2); // Ảnh mặc định
                     }
-                    
+
                     // Hiển thị sizes
                     layoutProductSizes.removeAllViews();
+                    TextView tvLabel = new TextView(ProductDetailActivity.this);
+                    tvLabel.setText("Kích thước sản phẩm:");
+                    tvLabel.setTextColor(Color.BLACK);
+                    tvLabel.setTextSize(16f);
+                    tvLabel.setPadding(0, 0, 0, 8);
+                    layoutProductSizes.addView(tvLabel);
+
                     if (currentProduct.getProductSizes() != null && !currentProduct.getProductSizes().isEmpty()) {
                         for (Product.ProductSize size : currentProduct.getProductSizes()) {
                             TextView tvSize = new TextView(ProductDetailActivity.this);
@@ -133,7 +167,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                             tvSize.setBackgroundResource(R.drawable.bg_pink); // sử dụng bg_pink hoặc drawable bo góc
                             tvSize.setPadding(24, 8, 24, 8);
                             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                             params.setMargins(8, 0, 8, 0);
                             tvSize.setLayoutParams(params);
                             layoutProductSizes.addView(tvSize);
@@ -144,6 +178,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                         tvNone.setTextColor(Color.GRAY);
                         layoutProductSizes.addView(tvNone);
                     }
+
                     // Hiển thị reviews
                     layoutProductReviews.removeAllViews();
                     myReview = null;
@@ -212,16 +247,16 @@ public class ProductDetailActivity extends AppCompatActivity {
                         tvNone.setTextColor(Color.GRAY);
                         layoutProductReviews.addView(tvNone);
                     }
-                    
+
                     // Setup button click listeners
                     setupButtonListeners();
 
-                    if (myReview != null) {
-                        btnReviewProduct.setText("Chỉnh sửa đánh giá");
-                    } else {
-                        btnReviewProduct.setText("Đánh giá sản phẩm");
-                    }
-                    btnReviewProduct.setOnClickListener(v -> showReviewDialog());
+//                    if (myReview != null) {
+//                        btnReviewProduct.setText("Chỉnh sửa đánh giá");
+//                    } else {
+//                        btnReviewProduct.setText("Đánh giá sản phẩm");
+//                    }
+//                    btnReviewProduct.setOnClickListener(v -> showReviewDialog());
                 } else {
                     Log.d("API_DETAIL", "response not successful or body null");
                 }
@@ -231,12 +266,21 @@ public class ProductDetailActivity extends AppCompatActivity {
                 Log.e("API_DETAIL", "API call failed", t);
             }
         });
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        getWindow().setStatusBarColor(android.graphics.Color.TRANSPARENT);
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom);
+            return insets;
+        });
     }
-    
+
     private void setupButtonListeners() {
         Button btnAddToCart = findViewById(R.id.btnAddToCart);
         Button btnBuyNow = findViewById(R.id.btnBuyNow);
-        
+
         btnAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -244,16 +288,16 @@ public class ProductDetailActivity extends AppCompatActivity {
                     Toast.makeText(ProductDetailActivity.this, "Vui lòng đăng nhập để thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                
+
                 if (currentProduct == null) {
                     Toast.makeText(ProductDetailActivity.this, "Không thể thêm sản phẩm vào giỏ hàng", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                
+
                 addToCart(1); // Default quantity = 1
             }
         });
-        
+
         btnBuyNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -261,32 +305,32 @@ public class ProductDetailActivity extends AppCompatActivity {
                     Toast.makeText(ProductDetailActivity.this, "Vui lòng đăng nhập để mua hàng", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                
+
                 if (currentProduct == null) {
                     Toast.makeText(ProductDetailActivity.this, "Không thể mua sản phẩm này", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                
+
                 // Add to cart first, then navigate to cart
                 addToCart(1);
             }
         });
     }
-    
+
     private void addToCart(int quantity) {
         String token = tokenManager.getAuthorizationHeader();
         if (token == null) {
             Toast.makeText(this, "Vui lòng đăng nhập", Toast.LENGTH_SHORT).show();
             return;
         }
-        
+
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
         apiService.addToCart(token, productId, quantity).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(ProductDetailActivity.this, "Đã thêm vào giỏ hàng thành công!", Toast.LENGTH_SHORT).show();
-                    
+
                     // If it was "Buy Now", navigate to cart
                     Button btnBuyNow = findViewById(R.id.btnBuyNow);
                     if (btnBuyNow.isPressed()) {
@@ -297,7 +341,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                     Toast.makeText(ProductDetailActivity.this, "Không thể thêm vào giỏ hàng. Vui lòng thử lại.", Toast.LENGTH_SHORT).show();
                 }
             }
-            
+
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 Log.e("ADD_TO_CART", "API call failed", t);
@@ -396,5 +440,48 @@ public class ProductDetailActivity extends AppCompatActivity {
                 Toast.makeText(ProductDetailActivity.this, "Lỗi kết nối khi cập nhật đánh giá.", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_detail_book, menu);
+
+        MenuItem menuItem = menu.findItem(R.id.action_cart);
+        View actionView = menuItem.getActionView();
+
+        TextView cartBadge = actionView.findViewById(R.id.cart_badge);
+        ImageView cartIcon = actionView.findViewById(R.id.ic_cart);
+
+        int cartCount = CartManager.getCartCount(); //
+        if (cartCount > 0) {
+            cartBadge.setText(String.valueOf(cartCount));
+            cartBadge.setVisibility(View.VISIBLE);
+        } else {
+            cartBadge.setVisibility(View.GONE);
+        }
+
+        actionView.setOnClickListener(v -> onOptionsItemSelected(menuItem));
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_cart) {
+            Intent intent = new Intent(this, LayoutScreen.class);
+            intent.putExtra("navigateTo", "cart");
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (findViewById(R.id.cart_container).getVisibility() == View.VISIBLE) {
+            getSupportFragmentManager().popBackStack();
+            findViewById(R.id.cart_container).setVisibility(View.GONE);
+            findViewById(R.id.main).setVisibility(View.VISIBLE);
+        } else {
+            super.onBackPressed();
+        }
     }
 } 

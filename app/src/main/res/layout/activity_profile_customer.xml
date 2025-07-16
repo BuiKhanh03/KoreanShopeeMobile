@@ -2,134 +2,123 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/main"
-    android:background="@color/pink300"
+    android:background="@color/pink800"
     android:fillViewport="true"
     tools:context=".ProfileCustomer">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="16dp"
-        android:focusableInTouchMode="true"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:textAlignment="center">
+        android:background="@android:color/white"
+        android:elevation="2dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:background="@drawable/bg_welcome_rounded"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_back"
+                app:tint="@color/white" />
 
+
+        </LinearLayout>
+
+        <!-- Avatar -->
+        <FrameLayout
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/uavatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/circle_background"
+                android:elevation="4dp"
+                android:padding="4dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_userr" />
+
+        </FrameLayout>
+
+        <!-- Loading Progress -->
         <ProgressBar
             android:id="@+id/uProgress"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:background="@color/white"
+            android:layout_height="6dp"
+            android:background="@color/gray500"
             android:indeterminate="true"
             android:visibility="gone" />
 
-        <Space
+        <!-- First Name -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="24dp">
 
-        <ImageView
-            android:id="@+id/uavatar"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_userr"
-            android:scaleType="centerCrop"
-            android:background="@drawable/circle_background"
-            android:layout_marginTop="16dp" />
+            <EditText
+                android:id="@+id/ufirstname"
+                style="@style/StyledEditText"
+                android:hint="@string/f_name" />
 
-        <EditText
-            android:id="@+id/ufirstname"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/rounded_edittext"
-            android:hint="@string/f_name"
-            android:padding="16dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/gray500" />
+            <EditText
+                android:id="@+id/ulastname"
+                style="@style/StyledEditText"
+                android:layout_marginTop="12dp"
+                android:hint="@string/l_name" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
+            <EditText
+                android:id="@+id/uphone"
+                style="@style/StyledEditText"
+                android:layout_marginTop="12dp"
+                android:hint="@string/ph_no"
+                android:inputType="phone"
+                android:maxLength="11" />
 
-        <EditText
-            android:id="@+id/ulastname"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/rounded_edittext"
-            android:hint="@string/l_name"
-            android:padding="16dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/gray500" />
+            <EditText
+                android:id="@+id/uemail"
+                style="@style/StyledEditText"
+                android:layout_marginTop="12dp"
+                android:enabled="false"
+                android:focusable="false"
+                android:hint="Email"
+                android:textColorHint="@color/gray500" />
+        </LinearLayout>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
+        <!-- Last Name -->
 
-        <EditText
-            android:id="@+id/uphone"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/rounded_edittext"
-            android:hint="@string/ph_no"
-            android:inputType="number"
-            android:maxLength="11"
-            android:padding="16dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/gray500" />
+        <!-- Phone -->
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
+        <!-- Email (disabled) -->
 
-        <EditText
-            android:id="@+id/uemail"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/rounded_edittext"
-            android:hint="Email"
-            android:padding="16dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/gray500"
-            android:enabled="false"
-            android:focusable="false" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
-
+        <!-- Button -->
         <Button
             android:id="@+id/btnUpdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cập nhật thông tin"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="32dp"
             android:backgroundTint="@color/pink500"
+            android:elevation="2dp"
+            android:padding="12dp"
+            android:text="Cập nhật thông tin"
+            android:textAllCaps="false"
             android:textColor="@color/white"
-            android:layout_marginTop="8dp" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            android:textSize="16sp" />
 
     </LinearLayout>
-
 </ScrollView>

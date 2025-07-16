@@ -65,7 +65,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.BookViewHolder
     public static class BookViewHolder extends RecyclerView.ViewHolder {
         TextView tvTitle, tvPrice;
         ImageView imgBook;
-        Button btnAddToCart, btnReview;
+        ImageView btnAddToCart, btnReview;
 
         public BookViewHolder(@NonNull View itemView) {
             super(itemView);
