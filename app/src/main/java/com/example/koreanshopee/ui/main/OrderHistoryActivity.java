@@ -2,9 +2,13 @@ package com.example.koreanshopee.ui.main;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.koreanshopee.R;
@@ -21,11 +25,16 @@ import retrofit2.Response;
 public class OrderHistoryActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private TextView tvEmpty;
+    private ImageView btnBack;
     private OrderHistoryAdapter adapter;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history);
+
+        btnBack = findViewById(R.id.btn_back);
+        btnBack.setOnClickListener(v -> finish());
+
         recyclerView = findViewById(R.id.recyclerViewOrderHistory);
         tvEmpty = findViewById(R.id.tvOrderHistoryEmpty);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -37,6 +46,17 @@ public class OrderHistoryActivity extends AppCompatActivity {
             startActivity(intent);
         });
         loadOrderHistory();
+
+        // Kích hoạt layout toàn màn hình và trong suốt status bar
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        getWindow().setStatusBarColor(android.graphics.Color.TRANSPARENT);
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom);
+            return insets;
+        });
     }
     private void loadOrderHistory() {
         TokenManager tokenManager = new TokenManager(this);

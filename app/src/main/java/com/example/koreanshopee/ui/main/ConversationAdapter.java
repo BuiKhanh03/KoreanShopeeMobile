@@ -1,6 +1,5 @@
-package com.example.koreanshopee.Chat;
+package com.example.koreanshopee.ui.main;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,16 +14,13 @@ import com.example.koreanshopee.R;
 import java.util.List;
 
 public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapter.ConversationViewHolder> {
-    private Context context;
     private List<Conversation> conversations;
     private OnItemClickListener listener;
-
     public interface OnItemClickListener {
         void onItemClick(Conversation conversation);
     }
 
-    public ConversationAdapter(Context context, List<Conversation> conversations, OnItemClickListener listener) {
-        this.context = context;
+    public ConversationAdapter(List<Conversation> conversations, OnItemClickListener listener) {
         this.conversations = conversations;
         this.listener = listener;
     }
@@ -32,7 +28,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
     @NonNull
     @Override
     public ConversationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_conversation, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_conversation, parent, false);
         return new ConversationViewHolder(view);
     }
 

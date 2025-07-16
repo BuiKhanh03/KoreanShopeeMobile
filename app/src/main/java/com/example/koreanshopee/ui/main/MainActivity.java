@@ -16,7 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.koreanshopee.R;
 import com.example.koreanshopee.auth.LogoutHelper;
 import com.example.koreanshopee.auth.TokenManager;
-import com.example.koreanshopee.layout_sceen;
+import com.example.koreanshopee.LayoutScreen;
 import com.example.koreanshopee.ui.auth.LoginActivity;
 import com.example.koreanshopee.ui.auth.SignupActivity;
 
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         btnGoToMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, layout_sceen.class);
+                Intent intent = new Intent(MainActivity.this, LayoutScreen.class);
                 startActivity(intent);
             }
         });

@@ -16,7 +16,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:background="@color/blue300">
 
         <ImageView
             android:id="@+id/iv_category_icon"
@@ -34,7 +35,7 @@
             android:layout_marginTop="8dp"
             android:text="Category"
             android:textSize="13sp"
-            android:textColor="#333333"
+            android:textColor="@color/white"
             android:textStyle="bold"
             android:maxLines="1"
             android:ellipsize="end"

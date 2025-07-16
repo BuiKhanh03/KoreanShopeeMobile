@@ -1,4 +1,4 @@
-package com.example.koreanshopee.Notification;
+package com.example.koreanshopee.ui.main;
 
 public class ItemNotification {
         private String title;

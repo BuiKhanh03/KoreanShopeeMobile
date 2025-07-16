@@ -1,41 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/top_toolbar"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/pink800"
-    android:padding="8dp"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    android:background="@drawable/bg_welcome_rounded"
+    android:orientation="vertical"
+    android:padding="20dp">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:gravity="center_vertical"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="18dp"
+        android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:paddingHorizontal="12dp">
 
-        <EditText
-            android:id="@+id/search_bar"
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="8.5"
-            android:background="@drawable/search_background"
-            android:drawableLeft="@drawable/ic_search"
-            android:drawablePadding="8dp"
-            android:hint="Tìm kiếm sản phẩm..."
-            android:inputType="text"
-            android:paddingHorizontal="12dp"
-            android:textColor="@color/pink800"
-            android:textColorHint="@color/blue800" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_welcome"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_width="wrap_content"
+                android:text="Xin chào"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="sneytaa"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/icon_chat"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1.5"
-            android:contentDescription="Trò chuyện"
-            android:padding="8dp"
-            android:src="@drawable/ic_chat" />
+            android:layout_height="32dp"
+            android:layout_width="32dp"
+            android:src="@drawable/ic_mess" />
     </LinearLayout>
-</androidx.appcompat.widget.Toolbar>
+
+    <EditText
+        android:background="@drawable/bg_search"
+        android:drawableStart="@drawable/ic_search"
+        android:hint="Tìm kiếm bất cứ cái gì..."
+        android:id="@+id/search_bar"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:layout_height="48dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:paddingStart="12dp" />
+
+    <TextView
+        android:id="@+id/tv_not_found"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:padding="12dp"
+        android:text="Không tìm thấy kết quả"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_search_results"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:visibility="gone" />
+
+
+</LinearLayout>

@@ -19,7 +19,7 @@ import com.example.koreanshopee.api.ApiClient;
 import com.example.koreanshopee.utils.TokenManager;
 import com.example.koreanshopee.model.LoginRequest;
 import com.example.koreanshopee.model.LoginResponse;
-import com.example.koreanshopee.layout_sceen;
+import com.example.koreanshopee.LayoutScreen;
 import com.example.koreanshopee.ui.seller.SellerActivity;
 
 import retrofit2.Call;
@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         } else {
             // Redirect to Customer main screen
-            Intent intent = new Intent(LoginActivity.this, layout_sceen.class);
+            Intent intent = new Intent(LoginActivity.this, LayoutScreen.class);
             startActivity(intent);
             finish();
         }
@@ -149,7 +149,7 @@ public class LoginActivity extends AppCompatActivity {
                         finish();
                     } else {
                         // Redirect to Customer main screen
-                        Intent intent = new Intent(LoginActivity.this, layout_sceen.class);
+                        Intent intent = new Intent(LoginActivity.this, LayoutScreen.class);
                         startActivity(intent);
                         finish();
                     }

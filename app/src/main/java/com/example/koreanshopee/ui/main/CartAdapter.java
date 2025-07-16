@@ -76,40 +76,58 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                 .into(holder.imgProduct);
 
         holder.btnMinus.setOnClickListener(v -> {
-            if (item.getQuantity() > 1) {
-                int newQuantity = item.getQuantity() - 1;
-                updateCartItemQuantity(item, newQuantity, position, holder);
+            int currentPosition = holder.getAdapterPosition();
+            if (currentPosition != RecyclerView.NO_POSITION) {
+                CartItem currentItem = cartItems.get(currentPosition);
+                if (currentItem.getQuantity() > 1) {
+                    int newQuantity = currentItem.getQuantity() - 1;
+                    updateCartItemQuantity(currentItem, newQuantity, currentPosition, holder);
+                    listener.onQuantityChanged();
+                }
             }
         });
+
         holder.btnPlus.setOnClickListener(v -> {
-            int newQuantity = item.getQuantity() + 1;
-            updateCartItemQuantity(item, newQuantity, position, holder);
-        });
-        holder.btnRemove.setOnClickListener(v -> {
-            String token = tokenManager.getAuthorizationHeader();
-            if (token == null) {
-                Toast.makeText(context, "Vui lòng đăng nhập", Toast.LENGTH_SHORT).show();
-                return;
+            int currentPosition = holder.getAdapterPosition();
+            if (currentPosition != RecyclerView.NO_POSITION) {
+                CartItem currentItem = cartItems.get(currentPosition);
+                int newQuantity = currentItem.getQuantity() + 1;
+                updateCartItemQuantity(currentItem, newQuantity, currentPosition, holder);
+                listener.onQuantityChanged();
             }
-            apiService.deleteCartItem(token, item.getId()).enqueue(new Callback<Void>() {
-                @Override
-                public void onResponse(Call<Void> call, Response<Void> response) {
-                    if (response.isSuccessful()) {
-                        cartItems.remove(position);
-                        notifyItemRemoved(position);
-                        listener.onDeleteItem(position);
-                        Toast.makeText(context, "Đã xóa sản phẩm khỏi giỏ hàng", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(context, "Xóa sản phẩm thất bại", Toast.LENGTH_SHORT).show();
+        });
+
+        holder.btnRemove.setOnClickListener(v -> {
+            int currentPosition = holder.getAdapterPosition();
+            if (currentPosition != RecyclerView.NO_POSITION) {
+                CartItem currentItem = cartItems.get(currentPosition);
+                String token = tokenManager.getAuthorizationHeader();
+                if (token == null) {
+                    Toast.makeText(context, "Vui lòng đăng nhập", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                apiService.deleteCartItem(token, currentItem.getId()).enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful()) {
+                            cartItems.remove(currentPosition);
+                            notifyItemRemoved(currentPosition);
+                            listener.onDeleteItem(currentPosition);
+                            Toast.makeText(context, "Đã xóa sản phẩm khỏi giỏ hàng", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context, "Xóa sản phẩm thất bại", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                }
-                @Override
-                public void onFailure(Call<Void> call, Throwable t) {
-                    Toast.makeText(context, "Lỗi kết nối", Toast.LENGTH_SHORT).show();
-                }
-            });
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Toast.makeText(context, "Lỗi kết nối", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
         });
     }
+
 
     @Override
     public int getItemCount() {
@@ -118,9 +136,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     public static class CartViewHolder extends RecyclerView.ViewHolder {
         ImageView imgProduct;
-        TextView tvProductName, tvProductType, tvQuantity;
-        Button btnMinus, btnPlus;
-        ImageButton btnRemove;
+        TextView tvProductName, tvProductType, btnMinus, btnPlus, tvQuantity;
+        ImageView btnRemove;
 
         public CartViewHolder(@NonNull View itemView) {
             super(itemView);
