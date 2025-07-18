@@ -2,6 +2,7 @@ package com.example.koreanshopee.ui.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +22,9 @@ import com.example.koreanshopee.model.LoginRequest;
 import com.example.koreanshopee.model.LoginResponse;
 import com.example.koreanshopee.LayoutScreen;
 import com.example.koreanshopee.ui.seller.SellerActivity;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -85,22 +89,15 @@ public class LoginActivity extends AppCompatActivity {
             return insets;
         });
     }
-
     private void checkUserRoleAndRedirect() {
         String role = tokenManager.getUserRole();
-        if ("Seller".equals(role)) {
-            // Redirect to SellerActivity
-            Intent intent = new Intent(LoginActivity.this, SellerActivity.class);
-            startActivity(intent);
-            finish();
+        if (role != null && role.equalsIgnoreCase("Seller")) {
+            startActivity(new Intent(LoginActivity.this, SellerActivity.class));
         } else {
-            // Redirect to Customer main screen
-            Intent intent = new Intent(LoginActivity.this, LayoutScreen.class);
-            startActivity(intent);
-            finish();
+            startActivity(new Intent(LoginActivity.this, LayoutScreen.class));
         }
+        finish();
     }
-
     private void performLogin() {
         String email = inputEmail.getText().toString().trim();
         String password = inputPassword.getText().toString().trim();
@@ -132,27 +129,44 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (response.isSuccessful() && response.body() != null) {
                     LoginResponse loginResponse = response.body();
-                    
-                    // Save token and role
-                    tokenManager.saveToken(loginResponse.getAccessToken());
-                    tokenManager.saveUserRole(loginResponse.getRole());
-                    
-                    // Show success message
-                    Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
-                    
-                    // Check role and redirect accordingly
-                    String role = loginResponse.getRole();
-                    if ("Seller".equals(role)) {
-                        // Redirect to SellerActivity
-                        Intent intent = new Intent(LoginActivity.this, SellerActivity.class);
-                        startActivity(intent);
-                        finish();
+
+                    String accessToken = loginResponse.getAccessToken();
+                    tokenManager.saveToken(accessToken);
+
+// Giải mã JWT để lấy role
+                    String[] parts = accessToken.split("\\.");
+                    if (parts.length == 3) {
+                        try {
+                            String payload = new String(
+                                    Base64.decode(parts[1], Base64.URL_SAFE | Base64.NO_WRAP | Base64.NO_PADDING),
+                                    "UTF-8"
+                            );
+
+                            JSONObject jsonObject = new JSONObject(payload);
+                            JSONArray roles = jsonObject.getJSONArray("http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
+
+                            String role = roles.getString(0); // Lấy role đầu tiên: "Seller", "SELLER", etc.
+                            tokenManager.saveUserRole(role);  // ✅ lưu lại
+
+                            Toast.makeText(LoginActivity.this, "Đăng nhập với quyền: " + role, Toast.LENGTH_SHORT).show();
+
+                            // Redirect theo role
+                            if ("Seller".equalsIgnoreCase(role)) {
+                                startActivity(new Intent(LoginActivity.this, SellerActivity.class));
+                            } else {
+                                startActivity(new Intent(LoginActivity.this, LayoutScreen.class));
+                            }
+
+                            finish();
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Toast.makeText(LoginActivity.this, "Không đọc được role từ token", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
-                        // Redirect to Customer main screen
-                        Intent intent = new Intent(LoginActivity.this, LayoutScreen.class);
-                        startActivity(intent);
-                        finish();
+                        Toast.makeText(LoginActivity.this, "Token không hợp lệ", Toast.LENGTH_SHORT).show();
                     }
+
                 } else {
                     // Handle error response
                     String errorMessage = "Đăng nhập thất bại";

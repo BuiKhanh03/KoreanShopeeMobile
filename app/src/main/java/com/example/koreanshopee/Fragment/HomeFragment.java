@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.koreanshopee.R;
 import com.example.koreanshopee.api.ApiClient;
 import com.example.koreanshopee.api.ApiService;
@@ -235,7 +236,7 @@ public class HomeFragment extends Fragment {
         tvProductName.setText(product.getName());
         tvProductPrice.setText(product.getPrice() + " VNĐ");
         tvProductStatus.setText(product.getStatus());
-
+        imgProduct.setImageResource(R.drawable.avt1);
         productView.setOnClickListener(v -> {
             android.content.Intent intent = new android.content.Intent(getContext(), com.example.koreanshopee.ProductDetailActivity.class);
             intent.putExtra("product_id", product.getId());

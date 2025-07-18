@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f5f5f5">
@@ -10,127 +11,318 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- Toolbar -->
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:title="Quản lý sản phẩm"
-            app:titleTextColor="@android:color/white" />
+            android:layout_height="wrap_content"
+            android:background="@color/pink500"
+            android:orientation="vertical"
+            android:paddingTop="30dp">
 
-        <!-- Profile Section -->
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/pink500"
+                android:elevation="4dp"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="CỬA HÀNG CỦA TÔI"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </androidx.appcompat.widget.Toolbar>
+
+        </LinearLayout>
+
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
+            android:background="#FFFFFF"
             app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
-            android:background="#FFFFFF">
+            app:cardElevation="4dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="16dp">
+                android:padding="20dp">
 
                 <ImageView
                     android:id="@+id/ivProfileImage"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:src="@drawable/profile_picdemo"
+                    android:background="@drawable/circle_background"
                     android:scaleType="centerCrop"
-                    android:background="@drawable/circle_background" />
+                    android:src="@drawable/profile_picdemo" />
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="16dp"
-                    android:layout_gravity="center_vertical">
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/tvUserName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Tên người dùng"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="#333333" />
+                        android:textColor="#333333"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tvUserEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
                         android:text="email@example.com"
-                        android:textSize="14sp"
                         android:textColor="#666666"
-                        android:layout_marginTop="2dp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tvUserPhone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
                         android:text="0123456789"
-                        android:textSize="14sp"
                         android:textColor="#666666"
-                        android:layout_marginTop="2dp" />
+                        android:textSize="14sp" />
 
                 </LinearLayout>
-
-                <Button
-                    android:id="@+id/btnLogout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Đăng xuất"
-                    android:textSize="12sp"
-                    android:background="@drawable/bg_pink"
-                    android:textColor="#FFFFFF"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
-                    android:layout_gravity="center_vertical" />
 
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
 
-        <!-- Products Section Title -->
-        <TextView
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/pink500" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sản phẩm của tôi"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="#333333"
-            android:gravity="center"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp" />
+            android:orientation="vertical"
+            android:layout_gravity="center">
 
-        <!-- Content -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewSellerProducts"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="8dp"
-            android:clipToPadding="false" />
+            <!-- Danh sách sản phẩm -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardToggleProducts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="64dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/ic_list_book"
+                        app:tint="@color/blue800" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Danh sách sản phẩm"
+                        android:textColor="@color/blue800"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:maxLines="1"
+                        android:ellipsize="end" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Danh sách khách hàng đã mua -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardToggleBuyers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="12dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="64dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/ic_user"
+                        app:tint="@color/blue800" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Danh sách khách hàng đã mua"
+                        android:textColor="@color/blue800"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:maxLines="1"
+                        android:ellipsize="end" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Danh sách đơn hàng -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardToggleOrders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="12dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="64dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/ic_order"
+                        app:tint="@color/blue800" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Danh sách đơn hàng"
+                        android:textColor="@color/blue800"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:maxLines="1"
+                        android:ellipsize="end" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Cài đặt -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardToggleSetting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="12dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="64dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/ic_settings"
+                        app:tint="@color/blue800" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Cài đặt"
+                        android:textColor="@color/blue800"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:maxLines="1"
+                        android:ellipsize="end" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Đăng xuất -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="64dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/ic_logout"
+                        app:tint="@color/blue800" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Đăng xuất"
+                        android:textColor="@color/blue800"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:maxLines="1"
+                        android:ellipsize="end" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
 
     </LinearLayout>
 
-    <!-- Floating Action Button -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAddProduct"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_add"
-        app:backgroundTint="@color/colorPrimary"
-        app:tint="@android:color/white" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout> 
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

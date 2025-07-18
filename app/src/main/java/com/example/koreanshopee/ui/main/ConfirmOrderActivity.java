@@ -7,6 +7,9 @@ import android.widget.*;
 import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.koreanshopee.R;
@@ -34,6 +37,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     private OrderItemAdapter adapter;
     private TokenManager tokenManager;
     private TextView tvShippingFee, tvTotalOrder;
+    private ImageView btnBack;
     private Map<String, Product> productMap = new HashMap<>();
     private final int shippingFee = 10000;
 
@@ -42,6 +46,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_order);
 
+        btnBack = findViewById(R.id.btn_back);
         recyclerViewOrderItems = findViewById(R.id.recyclerViewOrderItems);
         edtShippingAddress = findViewById(R.id.edtShippingAddress);
         btnConfirmOrder = findViewById(R.id.btnConfirmOrder);
@@ -49,6 +54,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         tvShippingFee = findViewById(R.id.tvShippingFee);
         tvTotalOrder = findViewById(R.id.tvTotalOrder);
 
+        btnBack.setOnClickListener(v -> finish());
         // Nhận orderItems và productMap từ Intent
         if (getIntent() != null && getIntent().hasExtra("orderItems")) {
             orderItems = (ArrayList<CartItem>) getIntent().getSerializableExtra("orderItems");
@@ -62,6 +68,15 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         updateTotalOrder();
 
         btnConfirmOrder.setOnClickListener(v -> confirmOrder());
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        getWindow().setStatusBarColor(android.graphics.Color.TRANSPARENT);
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom);
+            return insets;
+        });
     }
 
     private void confirmOrder() {

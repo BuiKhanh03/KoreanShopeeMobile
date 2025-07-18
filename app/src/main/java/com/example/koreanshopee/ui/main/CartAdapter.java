@@ -55,10 +55,19 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         Product product = productMap.get(item.getProductId());
         if (product == null) return;
 
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, 3); // cộng 3 ngày
+        Date deliveryDate = calendar.getTime();
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        String formattedDate = sdf.format(deliveryDate);
+
+
         holder.tvProductName.setText(product.getName());
         Log.d("Name", "Name " + product.getName());
-        holder.tvProductType.setText(product.getCategoryname());
+        holder.tvProductPrice.setText(String.format("%,d ₫", product.getPrice()));
         holder.tvQuantity.setText(String.valueOf(item.getQuantity()));
+        holder.tvDeliveryDate.setText("Giao hàng ngày " + formattedDate);
+
 
         String imageUrl = null;
         if (product.getProductImages() != null && !product.getProductImages().isEmpty()) {
@@ -136,18 +145,18 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     public static class CartViewHolder extends RecyclerView.ViewHolder {
         ImageView imgProduct;
-        TextView tvProductName, tvProductType, btnMinus, btnPlus, tvQuantity;
+        TextView tvProductName, tvProductPrice, btnMinus, btnPlus, tvDeliveryDate, tvQuantity;
         ImageView btnRemove;
-
         public CartViewHolder(@NonNull View itemView) {
             super(itemView);
             imgProduct = itemView.findViewById(R.id.imageProduct);
             tvProductName = itemView.findViewById(R.id.textProductName);
-            tvProductType = itemView.findViewById(R.id.textProductPrice);
+            tvProductPrice = itemView.findViewById(R.id.textProductPrice);
             tvQuantity = itemView.findViewById(R.id.textQuantity);
             btnMinus = itemView.findViewById(R.id.decrease);
             btnPlus = itemView.findViewById(R.id.increase);
             btnRemove = itemView.findViewById(R.id.buttonRemove);
+            tvDeliveryDate = itemView.findViewById(R.id.tv_cart_delivery);
         }
     }
 
