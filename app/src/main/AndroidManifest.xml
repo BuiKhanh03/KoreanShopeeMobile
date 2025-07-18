@@ -17,32 +17,44 @@
         android:theme="@style/Theme.KoreanShopee"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-<!--        <activity-->
-<!--            android:name=".Fragment.PendingDeliveryFragment"-->
-<!--            android:exported="false" />-->
-<!--        <activity-->
-<!--            android:name=".Fragment.DeliveredFragment"-->
-<!--            android:exported="false" />-->
+        <activity
+            android:name=".ui.seller.SellerProductSettingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.seller.SellerProductOrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.seller.SellerProductBuyerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.seller.SellerProductsActivity"
+            android:exported="false" /> <!-- <activity -->
+        <!-- android:name=".Fragment.PendingDeliveryFragment" -->
+        <!-- android:exported="false" /> -->
+        <!-- <activity -->
+        <!-- android:name=".Fragment.DeliveredFragment" -->
+        <!-- android:exported="false" /> -->
         <activity
             android:name=".InfoApp"
             android:exported="false" />
         <activity
             android:name=".ReviewOrder"
-            android:exported="false" />
-<!--        <activity-->
-<!--            android:name=".PaymentHistory"-->
-<!--            android:exported="false" />-->
+            android:exported="false" /> <!-- <activity -->
+        <!-- android:name=".PaymentHistory" -->
+        <!-- android:exported="false" /> -->
         <activity
             android:name=".ProfileCustomer"
             android:exported="false" />
         <activity
             android:name=".LayoutScreen"
             android:exported="true">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".ui.auth.SignupActivity"
@@ -70,26 +82,53 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".ProductDetailActivity" android:exported="false" />
+        <activity
+            android:name=".ProductDetailActivity"
+            android:exported="false" />
         <activity android:name=".ui.main.CartActivity" />
         <activity android:name=".ui.main.ConfirmOrderActivity" />
-        <activity android:name=".ui.main.VnpayResultActivity" android:exported="true">
+        <activity
+            android:name=".ui.main.VnpayResultActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="koreanshopee" android:host="vnpay_return" />
+
+                <data
+                    android:host="vnpay_return"
+                    android:scheme="koreanshopee" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.main.VnpayWebViewActivity" android:exported="false" />
-        <activity android:name=".ui.main.OrderHistoryActivity" android:exported="false" />
-        <activity android:name=".ui.main.OrderDetailActivity" android:exported="false" />
-        <activity android:name=".ui.main.PaymentResultActivity" android:exported="false" />
-        <activity android:name=".ui.seller.SellerActivity" android:exported="false" />
-        <activity android:name=".ui.seller.AddProductActivity" android:exported="false" />
-        <activity android:name=".ui.seller.EditProductActivity" android:exported="false" />
-        <activity android:name=".ui.main.ChatActivity" android:exported="false"/>
-        <activity android:name=".ui.main.ChatDetailActivity" android:exported="false"/>
+        <activity
+            android:name=".ui.main.VnpayWebViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.OrderHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.OrderDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.PaymentResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.seller.SellerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.seller.AddProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.seller.EditProductActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.ChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.ChatDetailActivity"
+            android:exported="false" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

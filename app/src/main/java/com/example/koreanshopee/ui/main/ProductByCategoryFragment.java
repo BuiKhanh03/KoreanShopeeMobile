@@ -18,8 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.koreanshopee.R;
 import com.example.koreanshopee.api.ApiClient;
 import com.example.koreanshopee.api.ApiService;
-import com.example.koreanshopee.model.Category;
-import com.example.koreanshopee.model.CategoryListResponse;
 import com.example.koreanshopee.model.CategoryResponse;
 import com.example.koreanshopee.model.Product;
 import com.example.koreanshopee.model.ProductListResponse;
